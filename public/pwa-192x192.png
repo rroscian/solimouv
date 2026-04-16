@@ -1,0 +1,8 @@
+# Placeholder - This should be replaced with actual 192x192 PNG icon
+# SVG version for development:
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192" fill="none">
+  <rect width="192" height="192" rx="24" fill="#2E7D32"/>
+  <circle cx="96" cy="80" r="32" fill="white"/>
+  <text x="96" y="140" text-anchor="middle" fill="white" font-size="24" font-weight="bold">Solimouv'</text>
+  <text x="96" y="160" text-anchor="middle" fill="#A5D6A7" font-size="12">Sport pour Tous</text>
+</svg>
