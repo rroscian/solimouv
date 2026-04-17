@@ -129,7 +129,6 @@ ${formData.message}`;
 </div>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=League+Gothic:wght@400&family=Poppins:wght@400;500;600&display=swap');
   
   .contact {
     min-height: 100vh;

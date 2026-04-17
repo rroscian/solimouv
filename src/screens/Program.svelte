@@ -130,7 +130,6 @@
 </div>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=League+Gothic:wght@400;700&family=Poppins:wght@400;500;600;700;900&display=swap');
   
   .program {
     min-height: 100vh;
