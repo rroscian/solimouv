@@ -158,6 +158,21 @@
     padding: 0 1rem;
   }
 
+  /* Desktop Container */
+  @media (min-width: 769px) {
+    .container {
+      max-width: 1200px;
+      padding: 0 2rem;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .container {
+      max-width: 1400px;
+      padding: 0 4rem;
+    }
+  }
+
   /* Welcome Header */
   .welcome-header {
     background: white;
@@ -475,34 +490,216 @@
 
   /* Desktop responsive */
   @media (min-width: 769px) {
-    .container {
-      max-width: 1200px;
-      padding: 0 2rem;
+    /* Global section boxes */
+    .welcome-header,
+    .up-team,
+    .program-section,
+    .partners-section,
+    .about-up-sport,
+    .about-festival {
+      background: white;
+      margin-bottom: 3rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      border: 1px solid rgba(224, 224, 224, 0.3);
+    }
+
+    /* Welcome section enhancement */
+    .welcome-header {
+      padding: 5rem 0 4rem;
+      background: linear-gradient(135deg, #f8fffe 0%, #f0f9f0 100%);
     }
 
     .welcome-title {
-      font-size: 32px;
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2C3E50 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
     }
 
+    .welcome-subtitle {
+      font-size: 1.25rem;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 3rem;
+      color: #2C3E50;
+    }
+
+    /* Section title improvements */
     .section-title {
-      font-size: 32px;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .section-tag {
+      display: block;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-description {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 3rem;
+      font-size: 1.1rem;
+    }
+
+    /* UP Team section */
+    .up-team {
+      padding: 4rem;
+    }
+
+    .up-team-card {
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      max-width: 1000px;
+      margin: 0 auto;
+      position: relative;
+      background: #E8F4E8;
+    }
+
+    .up-team-content {
+      order: 1;
+      padding: 2rem;
+    }
+
+    .handshake-illustration {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 160px;
+      height: 120px;
+      z-index: 10;
+    }
+
+    .up-team-title {
+      font-size: 3rem;
+      margin-bottom: 2rem;
+    }
+
+    .up-team-description {
+      font-size: 1.2rem;
+      max-width: 350px;
+      margin-bottom: 3rem;
+    }
+
+    .btn-team {
+      font-size: 1.1rem;
+      padding: 1rem 2rem;
+    }
+
+    /* Program section */
+    .program-section {
+      padding: 4rem;
     }
 
     .program-cards {
-      grid-template-columns: 1fr 1fr;
       display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .program-card {
       min-width: auto;
+      padding: 2rem;
     }
 
-    .up-team-card {
-      padding: 3rem;
+    /* Partners section */
+    .partners-section {
+      padding: 4rem;
     }
 
     .partner-buttons {
-      max-width: 400px;
+      max-width: 500px;
+      margin: 0 auto 3rem;
+    }
+
+    /* About sections layout */
+    .about-up-sport,
+    .about-festival {
+      padding: 4rem;
+    }
+
+    .about-up-sport .container,
+    .about-festival .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .about-up-sport .image-container,
+    .about-festival .image-container {
+      margin: 0;
+    }
+
+    .sport-image,
+    .accessibility-image {
+      height: 350px;
+    }
+
+    /* Button center alignment */
+    .btn-program,
+    .btn-discover,
+    .btn-learn-more {
+      display: block;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      padding: 1rem 2.5rem;
+    }
+  }
+
+  /* Large Desktop */
+  @media (min-width: 1200px) {
+    /* Section boxes enhanced */
+    .welcome-header,
+    .up-team,
+    .program-section,
+    .partners-section,
+    .about-up-sport,
+    .about-festival {
+      padding: 5rem;
+      margin-bottom: 4rem;
+      border-radius: 25px;
+    }
+
+    .welcome-title {
+      font-size: 4rem;
+    }
+    
+    .section-title {
+      font-size: 3rem;
+    }
+
+    .up-team-card {
+      padding: 0;
+    }
+
+    .handshake-illustration {
+      top: 30px;
+      right: 30px;
+      width: 180px;
+      height: 140px;
+    }
+
+    .program-cards {
+      max-width: 1000px;
+    }
+
+    .about-up-sport .container,
+    .about-festival .container {
+      gap: 6rem;
     }
   }
 </style>

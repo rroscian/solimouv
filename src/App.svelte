@@ -63,8 +63,8 @@
     {/if}
   </main>
   
-  <!-- Bottom Navigation Bar -->
-  <nav class="bottom-nav">
+  <!-- Mobile Bottom Navigation Bar -->
+  <nav class="mobile-nav">
     <button 
       class="nav-item"
       class:active={currentScreen === 'home'}
@@ -129,8 +129,8 @@
     padding-bottom: 80px; /* Space for bottom nav on mobile */
   }
 
-  /* Bottom Navigation */
-  .bottom-nav {
+  /* Mobile Bottom Navigation */
+  .mobile-nav {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -176,49 +176,24 @@
     font-weight: 500;
   }
 
-  /* Desktop adaptation - show as horizontal bar at top */
+  /* Desktop adaptation - hide mobile nav */
   @media (min-width: 769px) {
-    .bottom-nav {
-      position: relative;
-      top: 0;
-      bottom: auto;
-      background: white;
-      border-bottom: 1px solid #e0e0e0;
-      padding: 1rem 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      box-shadow: none;
+    .mobile-nav {
+      display: none;
     }
 
     main {
       padding-bottom: 0;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
     }
+  }
 
-    .nav-item {
-      flex-direction: row;
-      gap: 0.5rem;
-      padding: 0.75rem 1.5rem;
-      border-radius: 25px;
-      color: #2C3E50;
-      font-size: 1rem;
-    }
-
-    .nav-item.active {
-      background: #E8F5E8;
-      color: #2C3E50;
-    }
-
-    .nav-item:hover {
-      background: #f0f0f0;
-    }
-
-    .nav-icon {
-      font-size: 1rem;
-      margin-bottom: 0;
-    }
-
-    .nav-item span {
-      font-size: 1rem;
+  /* Large Desktop */
+  @media (min-width: 1200px) {
+    main {
+      padding: 3rem 4rem;
     }
   }
 </style>
