@@ -358,10 +358,5 @@
     .section-title {
       font-size: 28px;
     }
-    
-    .hands-svg {
-      width: 150px;
-      height: 90px;
-    }
   }
 </style>

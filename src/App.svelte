@@ -64,52 +64,38 @@
   </main>
   
   <!-- Mobile Bottom Navigation Bar -->
-  <nav class="mobile-nav">
-    <button 
-      class="nav-item"
-      class:active={currentScreen === 'home'}
-      on:click={() => navigate('home')}
-    >
-      <div class="nav-icon">🏠</div>
-      <span>Accueil</span>
-    </button>
-    
-    <button 
-      class="nav-item"
-      class:active={currentScreen === 'program'}
-      on:click={() => navigate('program')}
-    >
-      <div class="nav-icon">📅</div>
-      <span>Programme</span>
-    </button>
-    
-    <button 
-      class="nav-item"
-      class:active={currentScreen === 'about'}
-      on:click={() => navigate('about')}
-    >
-      <div class="nav-icon">🕒</div>
-      <span>À propos</span>
-    </button>
-    
-    <button 
-      class="nav-item"
-      class:active={currentScreen === 'partners'}
-      on:click={() => navigate('partners')}
-    >
-      <div class="nav-icon">🤝</div>
-      <span>Assos'</span>
-    </button>
-    
-    <button 
-      class="nav-item"
-      class:active={currentScreen === 'contact'}
-      on:click={() => navigate('contact')}
-    >
-      <div class="nav-icon">👤</div>
-      <span>Contact</span>
-    </button>
-  </nav>
+  <div data-state={currentScreen} class="navbar">
+    <div class="nav-item" class:active={currentScreen === 'home'} on:click={() => navigate('home')} on:keydown={e => e.key === 'Enter' && navigate('home')} role="button" tabindex="0">
+      <div class="home-03">
+        <img src="/accueil.svg" alt="Accueil" class="icon" />
+      </div>
+      <div><span class="accueil_span">Accueil</span></div>
+    </div>
+    <div class="nav-item_01" class:active={currentScreen === 'program'} on:click={() => navigate('program')} on:keydown={e => e.key === 'Enter' && navigate('program')} role="button" tabindex="0">
+      <div class="calendar-heart-01">
+        <img src="/programme.svg" alt="Programme" class="icon_01" />
+      </div>
+      <div><span class="programme_span">Programme</span></div>
+    </div>
+    <div class="nav-item_02" class:active={currentScreen === 'about'} on:click={() => navigate('about')} on:keydown={e => e.key === 'Enter' && navigate('about')} role="button" tabindex="0">
+      <div class="info-circle">
+        <img src="/apropos.svg" alt="À propos" class="icon_02" />
+      </div>
+      <div><span class="propos_span">À propos</span></div>
+    </div>
+    <div class="nav-item_03" class:active={currentScreen === 'partners'} on:click={() => navigate('partners')} on:keydown={e => e.key === 'Enter' && navigate('partners')} role="button" tabindex="0">
+      <div class="heart-hand">
+        <img src="/assos.svg" alt="Assos" class="icon_03" />
+      </div>
+      <div><span class="assos_span">Assos'</span></div>
+    </div>
+    <div class="nav-item_04" class:active={currentScreen === 'contact'} on:click={() => navigate('contact')} on:keydown={e => e.key === 'Enter' && navigate('contact')} role="button" tabindex="0">
+      <div class="image-user">
+        <img src="/contact.svg" alt="Contact" class="icon_04" />
+      </div>
+      <div><span class="contact_span">Contact</span></div>
+    </div>
+  </div>
   
   <Footer />
   
@@ -130,55 +116,234 @@
   }
 
   /* Mobile Bottom Navigation */
-  .mobile-nav {
+  .navbar {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    background: #2C3E50;
-    display: flex;
-    justify-content: space-around;
-    padding: 0.5rem 0;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    width: 100%;
+    height: auto;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    background: #0A111B;
+    justify-content: space-between;
+    align-items: center;
+    display: inline-flex;
     z-index: 100;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+  }
+
+  .icon {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    filter: brightness(0) invert(1);
+  }
+
+  .accueil_span {
+    color: white;
+    font-size: 12px;
+    font-family: Poppins;
+    font-weight: 500;
+    word-wrap: break-word;
+  }
+
+  .icon_01 {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    filter: brightness(0) saturate(100%) invert(60%) sepia(10%) saturate(342%) hue-rotate(180deg) brightness(95%) contrast(87%);
+  }
+
+  .programme_span {
+    color: #959DA7;
+    font-size: 12px;
+    font-family: Poppins;
+    font-weight: 500;
+    word-wrap: break-word;
+  }
+
+  .icon_02 {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    filter: brightness(0) saturate(100%) invert(60%) sepia(10%) saturate(342%) hue-rotate(180deg) brightness(95%) contrast(87%);
+  }
+
+  .propos_span {
+    color: #959DA7;
+    font-size: 12px;
+    font-family: Poppins;
+    font-weight: 500;
+    word-wrap: break-word;
+  }
+
+  .icon_03 {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    filter: brightness(0) saturate(100%) invert(60%) sepia(10%) saturate(342%) hue-rotate(180deg) brightness(95%) contrast(87%);
+  }
+
+  .assos_span {
+    color: #959DA7;
+    font-size: 12px;
+    font-family: Poppins;
+    font-weight: 500;
+    word-wrap: break-word;
+  }
+
+  .icon_04 {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    filter: brightness(0) saturate(100%) invert(60%) sepia(10%) saturate(342%) hue-rotate(180deg) brightness(95%) contrast(87%);
+  }
+
+  .contact_span {
+    color: #959DA7;
+    font-size: 12px;
+    font-family: Poppins;
+    font-weight: 500;
+    word-wrap: break-word;
+  }
+
+  .home-03 {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .calendar-heart-01 {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .info-circle {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .heart-hand {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .image-user {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    overflow: hidden;
   }
 
   .nav-item {
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-    display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
-    padding: 0.5rem;
-    transition: all 0.2s;
-    opacity: 0.7;
-    font-size: 0.75rem;
+    gap: 4px;
+    display: inline-flex;
+    cursor: pointer;
   }
 
-  .nav-item.active {
-    opacity: 1;
-    color: #FFD54F;
+  .nav-item_01 {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4px;
+    display: inline-flex;
+    cursor: pointer;
   }
 
-  .nav-item:hover {
-    opacity: 1;
+  .nav-item_02 {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4px;
+    display: inline-flex;
+    cursor: pointer;
   }
 
-  .nav-icon {
-    font-size: 1.2rem;
-    margin-bottom: 0.25rem;
+  .nav-item_03 {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4px;
+    display: inline-flex;
+    cursor: pointer;
   }
 
-  .nav-item span {
-    font-size: 0.7rem;
-    font-weight: 500;
+  .nav-item_04 {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4px;
+    display: inline-flex;
+    cursor: pointer;
+  }
+
+  /* Active state styling */
+  .nav-item.active .icon {
+    filter: brightness(0) invert(1);
+  }
+
+  .nav-item.active .accueil_span {
+    color: white;
+  }
+
+  .nav-item_01.active .icon_01 {
+    filter: brightness(0) invert(1);
+  }
+
+  .nav-item_01.active .programme_span {
+    color: white;
+  }
+
+  .nav-item_02.active .icon_02 {
+    filter: brightness(0) invert(1);
+  }
+
+  .nav-item_02.active .propos_span {
+    color: white;
+  }
+
+  .nav-item_03.active .icon_03 {
+    filter: brightness(0) invert(1);
+  }
+
+  .nav-item_03.active .assos_span {
+    color: white;
+  }
+
+  .nav-item_04.active .icon_04 {
+    filter: brightness(0) invert(1);
+  }
+
+  .nav-item_04.active .contact_span {
+    color: white;
   }
 
   /* Desktop adaptation - hide mobile nav */
   @media (min-width: 769px) {
-    .mobile-nav {
+    .navbar {
       display: none;
     }
 
