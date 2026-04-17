@@ -8,6 +8,7 @@
   import TeamMatcher from './screens/TeamMatcher.svelte';
   import Header from './components/Header.svelte';
   import Footer from './components/Footer.svelte';
+  import PWAInstallBanner from './components/PWAInstallBanner.svelte';
 
   // Simple router
   let currentScreen = 'home';
@@ -111,6 +112,9 @@
   </nav>
   
   <Footer />
+  
+  <!-- PWA Install Banner -->
+  <PWAInstallBanner />
 </div>
 
 <style>
