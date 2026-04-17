@@ -1,11 +1,18 @@
 # Solimouv' - PWA Festival du Sport pour Tous
 
-> **Une Progressive Web App inclusive pour promouvoir et piloter le festival Solimouv', organisé par l'association Up Sport! Paris**
+> **Une Progressive Web App inclusive avec backend complet pour promouvoir et piloter le festival Solimouv', organisé par l'association Up Sport! Paris**
+
+## 🌐 Démo Live
+
+**🚀 [Voir l'application en ligne](https://solimouv-txij.onrender.com/)**
 
 ![Solimouv](https://img.shields.io/badge/Solimouv'-Sport%20pour%20Tous-green)
 ![Svelte](https://img.shields.io/badge/Svelte-FF3E00?logo=svelte&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
 ![Rust](https://img.shields.io/badge/Rust-000000?logo=rust&logoColor=white)
 ![PWA](https://img.shields.io/badge/PWA-Ready-purple)
+![Render](https://img.shields.io/badge/Render-Deployed-46E3B7)
 
 ## 🌟 À Propos du Projet
 
@@ -25,6 +32,13 @@ Solimouv' est le festival du sport inclusif qui rassemble toutes les communauté
 - ✅ **Responsive** - Optimisée mobile-first
 - ✅ **Performance** - Chargement rapide, bundle optimisé
 - ✅ **Accessible** - Conforme aux standards d'accessibilité
+
+### 🔐 Authentification & Comptes Utilisateur
+- 🔒 **Inscription/Connexion** - System JWT sécurisé
+- 👤 **Profils personnalisés** - Avatar, bio, préférences
+- 🔑 **Gestion de session** - Tokens auto-renouvelés
+- 🛡️ **Sécurité renforcée** - Hachage bcrypt, rate limiting
+- 📱 **Interface moderne** - Modal responsive et intuitive
 
 ### 🏃‍♀️ Assistant de Matching Sportif (Powered by Rust)
 - 🦀 **Module Rust/WASM** pour des calculs de compatibilité optimisés
@@ -52,13 +66,34 @@ Solimouv' est le festival du sport inclusif qui rassemble toutes les communauté
 
 ## 🛠️ Stack Technique
 
+### Frontend
 ```
-Frontend:    Svelte 5 + Vite
+Framework:   Svelte 5 + Vite
 PWA:         vite-plugin-pwa + Workbox
 Performance: Module Rust/WASM + Fallback JS
 Styling:     CSS pur (responsive, animations)
 SEO:         Meta tags + Structured data
 Icons:       @tabler/icons-svelte
+Auth:        Service stores réactifs
+```
+
+### Backend
+```
+Runtime:     Node.js + Express.js
+Base de données: PostgreSQL + Prisma ORM
+Authentification: JWT + bcrypt
+Sécurité:    Helmet.js, CORS, rate limiting
+Validation:  Joi schemas
+API:         RESTful endpoints
+```
+
+### Déploiement
+```
+Platform:    Render.com
+Database:    PostgreSQL managed
+Frontend:    Static site deployment
+Backend:     Web service deployment
+Domaine:     solimouv-txij.onrender.com
 ```
 
 ## 🚀 Installation & Lancement
@@ -95,26 +130,30 @@ npm run preview
 ```
 
 ### 🌐 Accès
-- **Développement**: http://localhost:5173
-- **Production**: http://localhost:4173 (après build)
+- **Production**: https://solimouv-txij.onrender.com/
+- **Développement Frontend**: http://localhost:5173
+- **Développement Backend**: http://localhost:3001
+- **Preview**: http://localhost:4173 (après build)
 
 ## 📁 Structure du Projet
 
 ```
-solimouv-pwa/
+solimouv/
 ├── 📄 README.md                    # Documentation principale
-├── 🔧 package.json                 # Dépendances Node.js
+├── 📄 README-BACKEND.md            # Documentation API
+├── 🔧 package.json                 # Scripts racine + dépendances
 ├── ⚙️ vite.config.js              # Configuration Vite + PWA
 ├── 🗂️ public/                     # Assets statiques
 │   ├── 🗺️ sitemap.xml             # Plan du site pour SEO
 │   ├── 🤖 robots.txt              # Instructions robots d'indexation
 │   └── 🎨 pwa-*.png               # Icônes PWA
-├── 📦 src/                        # Code source
-│   ├── 🎯 main.js                 # Point d'entrée
+├── 📦 src/                        # Frontend Svelte
+│   ├── 🎯 main.js                 # Point d'entrée + PWA
 │   ├── 📱 App.svelte              # Composant racine + Router
 │   ├── 🧩 components/             # Composants réutilisables
-│   │   ├── Header.svelte          # Navigation principale
+│   │   ├── Header.svelte          # Navigation + Auth
 │   │   ├── Footer.svelte          # Pied de page
+│   │   ├── AuthModal.svelte       # Modal connexion/inscription
 │   │   └── SportMatcher.svelte    # Assistant de matching
 │   ├── 📄 screens/                # Pages principales
 │   │   ├── Home.svelte            # Accueil
@@ -123,11 +162,27 @@ solimouv-pwa/
 │   │   ├── Partners.svelte        # Partenaires
 │   │   └── Contact.svelte         # Contact + FAQ
 │   └── 🔧 utils/                  # Utilitaires
+│       ├── authStore.js           # Service d'authentification
+│       ├── pwaStore.js            # Gestion PWA
 │       └── rustMatcher.js         # Interface Rust/WASM
+├── 🔙 backend/                     # API Backend
+│   ├── 🗃️ prisma/                 # Base de données
+│   │   └── schema.prisma          # Modèles User, Post, Comment
+│   ├── 🛤️ routes/                 # Routes API
+│   │   ├── auth.js                # Authentification JWT
+│   │   ├── users.js               # Gestion utilisateurs
+│   │   └── posts.js               # Contenu et interactions
+│   ├── 🛡️ middleware/             # Middlewares
+│   │   └── auth.js                # Protection routes
+│   ├── 📄 .env.example            # Template configuration
+│   ├── 🔧 package.json            # Dépendances backend
+│   └── 🚀 index.js                # Serveur Express
 ├── 🦀 rust-wasm/                  # Module Rust WASM
 │   ├── Cargo.toml                 # Configuration Rust
 │   └── src/lib.rs                 # Algorithme de matching
-├── 🔨 setup.ps1                   # Script setup PowerShell
+├── 📝 setup-dev.md                # Guide développement
+├── � render-deploy.md            # Guide déploiement Render
+├── �🔨 setup.ps1                   # Script setup PowerShell
 └── 📝 setup.bat                   # Script setup Batch
 ```
 
@@ -233,9 +288,15 @@ npm run preview  # Test du build en local
 ```
 
 ### 🌐 Déploiement
-Compatible avec tous les hébergeurs statiques :
-- Netlify, Vercel, GitHub Pages
-- OVH, Ionos, serveur Apache/Nginx
+**Production actuelle** :
+- 🚀 [Application live](https://solimouv-txij.onrender.com/) - Render.com
+- 🗃️ PostgreSQL database managée
+- ⚡ API backend + frontend static
+
+**Alternatives supportées** :
+- Netlify, Vercel (frontend statique uniquement)
+- Railway, Supabase (backend + DB)
+- VPS avec Docker (déploiement complet)
 
 ### 📊 Monitoring Recommandé
 - Google Analytics pour l'usage

@@ -2,6 +2,13 @@
 
 Backend API pour l'application Solimouv avec authentification JWT et base de données PostgreSQL.
 
+## 🌐 API Live
+
+**🚀 [API en production](https://solimouv-txij.onrender.com/)** | [Frontend live](https://solimouv-txij.onrender.com/)
+
+- **Base URL** : `https://solimouv-backend.onrender.com/api`
+- **Health check** : `https://solimouv-backend.onrender.com/health`
+
 ## 🚀 Installation rapide
 
 ```bash
@@ -136,21 +143,22 @@ $currentUser     // données utilisateur
 
 ### 2. Configuration Render
 
-**Backend (Web Service)**
+**Backend (Web Service)** - [`solimouv-backend`](https://dashboard.render.com)
 - Runtime: Node  
 - Build Command: `npm install && npx prisma generate && npx prisma migrate deploy`
 - Start Command: `npm start`
+- Instance Type: `Starter` (gratuit)
 - Environment Variables:
   - `DATABASE_URL` (fourni par Render PostgreSQL)
   - `JWT_SECRET` (générer automatiquement)
   - `NODE_ENV=production`
-  - `FRONTEND_URL=https://votre-app.onrender.com`
+  - `FRONTEND_URL=https://solimouv-txij.onrender.com`
 
-**Frontend (Static Site)**
+**Frontend (Static Site)** - [`solimouv`](https://dashboard.render.com)
 - Build Command: `npm install && npm run build`
 - Publish Directory: `dist`
 - Environment Variables:
-  - `VITE_API_URL=https://votre-backend.onrender.com/api`
+  - `VITE_API_URL=https://solimouv-backend.onrender.com/api`
 
 ### 3. Base de données PostgreSQL
 
@@ -217,6 +225,10 @@ solimouv/
 
 ## 🐛 Débogage
 
+**URLs de test en production** :
+- API Health : https://solimouv-backend.onrender.com/health
+- Frontend : https://solimouv-txij.onrender.com/
+
 **Erreurs courantes**
 
 1. **Connexion DB échoue**
@@ -234,6 +246,10 @@ solimouv/
    ```bash
    # Régénérer JWT_SECRET (32+ caractères)
    ```
+
+4. **Cold start lent (gratuit Render)**
+   - Premier accès après 15min d'inactivité : ~30 secondes
+   - Solution : upgrade vers plan payant ou keep-alive service
 
 **Logs utiles**
 ```bash

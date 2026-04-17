@@ -2,6 +2,12 @@
 
 Guide de démarrage rapide pour le développement local avec PostgreSQL et authentification.
 
+## 🌐 Référence Production
+
+**🚀 [Application live](https://solimouv-txij.onrender.com/)** - Pour tester les fonctionnalités avant développement
+- **API** : https://solimouv-backend.onrender.com/api
+- **Health** : https://solimouv-backend.onrender.com/health
+
 ## 🚀 Démarrage ultra-rapide
 
 ```bash
@@ -190,10 +196,16 @@ npm run backend:start        # Démarrer backend prod
 
 ## 🎯 URLs de développement
 
+**Local** :
 - **Frontend** : http://localhost:5173
 - **Backend API** : http://localhost:3001  
 - **Health check** : http://localhost:3001/health
 - **Prisma Studio** : http://localhost:5555
+
+**Production (référence)** :
+- **Frontend** : https://solimouv-txij.onrender.com/
+- **Backend API** : https://solimouv-backend.onrender.com/api
+- **Health check** : https://solimouv-backend.onrender.com/health
 
 ## 🔍 Debug et troubleshooting
 
@@ -259,6 +271,7 @@ Une fois que tout fonctionne localement :
    - Créer PostgreSQL → Backend → Frontend dans cet ordre
 
 3. **Tester en production**
+   - Comparer avec la démo live : https://solimouv-txij.onrender.com/
    - Vérifier l'authentification
    - Tester la synchronisation des données
 

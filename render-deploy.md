@@ -2,6 +2,15 @@
 
 Guide complet pour déployer l'application Solimouv (frontend + backend + PostgreSQL) sur Render.
 
+## 🌐 Application Déployée
+
+**🚀 [Démo live](https://solimouv-txij.onrender.com/)** - Résultat final du déploiement
+
+**URLs déployées** :
+- **Frontend** : https://solimouv-txij.onrender.com/
+- **API Health** : https://solimouv-backend.onrender.com/health
+- **API Base** : https://solimouv-backend.onrender.com/api
+
 ## 🚀 Étapes de déploiement
 
 ### 1. Préparer le repository
@@ -46,7 +55,7 @@ git push origin main
 NODE_ENV=production
 DATABASE_URL=<URL_DE_LA_DB_POSTGRESQL>
 JWT_SECRET=<GENERER_AUTOMATIQUEMENT>
-FRONTEND_URL=https://solimouv.onrender.com
+FRONTEND_URL=https://solimouv-txij.onrender.com
 PORT=3001
 ```
 
@@ -66,7 +75,7 @@ PORT=3001
 
 **Environment Variables**
 ```env
-VITE_API_URL=https://solimouv-backend.onrender.com/api
+VITE_API_URL=https://solimouv-backend-txij.onrender.com/api
 ```
 
 ### 3. Ordre de déploiement
@@ -92,7 +101,7 @@ DATABASE_URL=postgresql://user:pass@host:port/db
 JWT_SECRET=your-super-long-secret-key-here-minimum-32-chars
 
 # CORS
-FRONTEND_URL=https://solimouv.onrender.com
+FRONTEND_URL=https://solimouv-txij.onrender.com
 
 # Optionnel
 LOG_LEVEL=info
@@ -100,7 +109,7 @@ LOG_LEVEL=info
 
 **Frontend (.env production)**
 ```env
-VITE_API_URL=https://solimouv-backend.onrender.com/api
+VITE_API_URL=https://solimouv-backend-txij.onrender.com/api
 VITE_APP_ENV=production
 ```
 
@@ -131,17 +140,17 @@ Le backend configure automatiquement :
 Tester les endpoints :
 ```bash
 # Health check
-curl https://solimouv-backend.onrender.com/health
+curl https://solimouv-backend-txij.onrender.com/health
 
 # Inscription test
-curl -X POST https://solimouv-backend.onrender.com/api/auth/register \
+curl -X POST https://solimouv-backend-txij.onrender.com/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{"email":"test@test.com","username":"test","password":"password123","confirmPassword":"password123"}'
 ```
 
 ### 2. Frontend
 
-1. Ouvrir https://solimouv.onrender.com
+1. Ouvrir https://solimouv-txij.onrender.com/
 2. Tester l'inscription/connexion
 3. Vérifier que l'API fonctionne
 
@@ -206,7 +215,7 @@ npm run build
 
 **CORS errors**
 - Vérifier `FRONTEND_URL` dans le backend
-- Vérifier `VITE_API_URL` dans le frontend
+- Vérifier `VITE_API_URL=https://solimouv-backend-txij.onrender.com/api` dans le frontend
 
 **JWT errors**  
 - Régénérer `JWT_SECRET` (minimum 32 caractères)
@@ -251,10 +260,12 @@ Configurer des alertes Render pour :
 
 Une fois déployé :
 
-- **Frontend** : https://solimouv.onrender.com
-- **Backend API** : https://solimouv-backend.onrender.com
-- **Health Check** : https://solimouv-backend.onrender.com/health
+- **Frontend** : https://solimouv-txij.onrender.com/
+- **Backend API** : https://solimouv-backend-txij.onrender.com/api
+- **Health Check** : https://solimouv-backend-txij.onrender.com/health
 - **PostgreSQL** : Géré par Render (pas d'accès public direct)
+
+> 🎆 **Application actuellement déployée et fonctionnelle !**
 
 ## 💰 Coût
 
