@@ -3,287 +3,545 @@
 </script>
 
 <div class="home">
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Solimouv'</h1>
-      <h2>Le Festival du Sport pour Tous</h2>
-      <p class="hero-description">
-        Un événement inclusif qui rassemble toutes les communautés autour du sport. 
-        Découvrez des activités adaptées à tous les profils et toutes les capacités.
+  <!-- Header avec message de bienvenue -->
+  <section class="welcome-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <span class="logo-text">Solimouv</span>
+        </div>
+        <div class="user-icon">
+          <div class="user-avatar">😊</div>
+        </div>
+      </div>
+      <h1 class="welcome-title">BIENVENU À SOLIMOUV LUCAS !</h1>
+      <p class="welcome-subtitle">
+        L'événement où chaque pas, chaque mouvement, est un prétexte pour créer du lien.
       </p>
-      <div class="hero-buttons">
-        <button class="btn-primary" on:click={() => navigate('team-matcher')}>
-          🤝 Trouvez votre équipe
-        </button>
-        <button class="btn-primary" on:click={() => navigate('program')}>
-          Découvrir le Programme
-        </button>
-        <button class="btn-secondary" on:click={() => navigate('about')}>
-          En Savoir Plus
-        </button>
-      </div>
     </div>
   </section>
-  
-  <section class="highlights">
+
+  <!-- Section UP TEAM -->
+  <section class="up-team">
     <div class="container">
-      <h2>Pourquoi Solimouv' ?</h2>
-      <div class="highlights-grid">
-        <div class="highlight-card">
-          <div class="highlight-icon">🏃‍♀️</div>
-          <h3>Sport Inclusif</h3>
-          <p>Des activités adaptées à tous les niveaux, tous les âges et toutes les capacités.</p>
-        </div>
-        <div class="highlight-card">
-          <div class="highlight-icon">🤝</div>
-          <h3>Mixité & Solidarité</h3>
-          <p>Un espace de rencontre qui rassemble toutes les communautés dans le respect.</p>
-        </div>
-        <div class="highlight-card">
-          <div class="highlight-icon">🎯</div>
-          <h3>Découverte</h3>
-          <p>85% des participants découvrent de nouvelles activités ou associations.</p>
-        </div>
-        <div class="highlight-card">
-          <div class="highlight-icon">❤️</div>
-          <h3>Bienveillance</h3>
-          <p>Un environnement bienveillant où chacun peut s'épanouir à son rythme.</p>
+      <div class="up-team-card">
+        <div class="up-team-content">
+          <h2 class="up-team-title">UP TEAM</h2>
+          <div class="handshake-illustration">
+            <svg width="100" height="80" viewBox="0 0 100 80">
+              <path d="M20 40 Q50 20 80 40" stroke="#FF5722" stroke-width="8" fill="none"/>
+              <circle cx="15" cy="45" r="8" fill="#2C3E50"/>
+              <circle cx="85" cy="45" r="8" fill="#FF5722"/>
+            </svg>
+          </div>
+          <p class="up-team-description">
+            Ne craignez plus d'arriver seul ou de ne pas savoir où aller. 
+            Nous vous matchons avec un petit groupe de participants.
+          </p>
+          <button class="btn-team" on:click={() => navigate('team-matcher')}>
+            <span>👥</span> Trouver ma Team
+          </button>
         </div>
       </div>
     </div>
   </section>
-  
-  <section class="stats">
+
+  <!-- Section Programme -->
+  <section class="program-section">
     <div class="container">
-      <h2>L'édition 2025 en chiffres</h2>
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-number">500+</div>
-          <div class="stat-label">Participants</div>
+      <div class="section-tag">Le programme</div>
+      <h2 class="section-title">BOUGER, À VOTRE RYTHME</h2>
+      <p class="section-subtitle">Découvrez le programme et nos activités !</p>
+      
+      <div class="program-cards">
+        <div class="program-card">
+          <div class="program-time">
+            <span>🕒</span> Aujourd'hui à 13h30
+          </div>
+          <div class="program-content">
+            <h3>INITIATION BOX MIXTE</h3>
+            <div class="program-arrow">↗</div>
+          </div>
         </div>
-        <div class="stat-card">
-          <div class="stat-number">13</div>
-          <div class="stat-label">Associations</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">92%</div>
-          <div class="stat-label">Veulent revenir</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">40</div>
-          <div class="stat-label">Bénévoles</div>
+        
+        <div class="program-card">
+          <div class="program-time">
+            <span>🕒</span> Aujourd'hui à 15h00
+          </div>
+          <div class="program-content">
+            <h3>YOGA DOUX</h3>
+            <div class="program-arrow">↗</div>
+          </div>
         </div>
       </div>
+      
+      <button class="btn-program" on:click={() => navigate('program')}>
+        Voir le programme <span>↗</span>
+      </button>
     </div>
   </section>
-  
-  <section class="cta">
+
+  <!-- Section Associations Partenaires -->
+  <section class="partners-section">
     <div class="container">
-      <h2>Rejoignez l'aventure Solimouv'</h2>
-      <p>Que vous soyez participant, bénévole ou association, il y a une place pour vous.</p>
-      <button class="btn-primary" on:click={() => navigate('contact')}>
-        Nous Contacter
+      <div class="section-tag">Associations partenaires</div>
+      <h2 class="section-title">DERRIÈRE CHAQUE SPORT, UNE MAIN TENDUE.</h2>
+      <p class="section-description">
+        Le festival est propulsé par un réseau d'associations passionnées. 
+        Découvrez les acteurs qui œuvrent au quotidien pour l'inclusion sociale et la mixité à Paris.
+      </p>
+      
+      <div class="partner-buttons">
+        <button class="btn-partner-primary">
+          UP SPORT! <span>↗</span>
+        </button>
+        <button class="btn-partner-secondary">
+          MAIRIE 13
+        </button>
+      </div>
+      
+      <button class="btn-discover" on:click={() => navigate('partners')}>
+        Découvrir les assos' <span>↗</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Section À propos UP Sport -->
+  <section class="about-up-sport">
+    <div class="container">
+      <div class="section-tag">À propos de UP Sport</div>
+      <h2 class="section-title">L'ASSOCIATION SPORT POUR TOUS À PARIS.</h2>
+      <p class="section-description">
+        Depuis 2016, l'association Up Sport! accompagne chaque semaine plus de 250 
+        personnes en situation de vulnérabilité. Pour nous, le sport n'est pas une 
+        compétition, c'est un outil de citoyenneté et de bienveillance.
+      </p>
+      
+      <div class="image-container">
+        <div class="sport-image">
+          <div class="people-exercising">
+            <div class="person-1">🏃‍♀️</div>
+            <div class="person-2">🤸‍♂️</div>
+          </div>
+          <div class="yellow-wave"></div>
+        </div>
+      </div>
+      
+      <button class="btn-learn-more" on:click={() => navigate('about')}>
+        En savoir plus <span>↗</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Section Festival Solimouv -->
+  <section class="about-festival">
+    <div class="container">
+      <div class="section-tag">À propos du Festival Solimouv</div>
+      <h2 class="section-title">RENDRE LE SPORT ACCESSIBLE À TOUTES ET TOUS.</h2>
+      <p class="section-description">
+        Solimouv' est le festival du sport pour tous, organisé par Up Sport! et un collectif 
+        d'associations parisiennes. La 1ère édition a rassemblé plus de 500 participants, 
+        13 associations partenaires et une quarantaine de bénévoles.
+      </p>
+      
+      <div class="image-container">
+        <div class="accessibility-image">
+          <div class="wheelchair-tennis">♿🎾</div>
+          <div class="yellow-wave"></div>
+        </div>
+      </div>
+      
+      <button class="btn-learn-more" on:click={() => navigate('about')}>
+        En savoir plus <span>↗</span>
       </button>
     </div>
   </section>
 </div>
 
 <style>
-  .home {
-    min-height: 100vh;
-  }
+  @import url('https://fonts.googleapis.com/css2?family=League+Gothic:wght@400;700&family=Poppins:wght@400;500;600;700;900&display=swap');
   
-  .hero {
-    background: linear-gradient(135deg, #2E7D32, #4CAF50);
+  .home {
+    background: white;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  /* Welcome Header */
+  .welcome-header {
+    background: white;
+    padding: 1rem 0;
+  }
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .logo-text {
+    font-family: 'League Gothic', sans-serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: #1a1a1a;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .user-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e0e0e0;
+  }
+
+  .welcome-title {
+    font-family: 'League Gothic', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 1rem 0;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  .welcome-subtitle {
+    font-size: 16px;
+    color: #4a4a4a;
+    line-height: 1.4;
+    margin: 0 0 2rem 0;
+  }
+
+  /* UP Team Section */
+  .up-team {
+    margin-bottom: 2rem;
+  }
+
+  .up-team-card {
+    background: #E8F4E8;
+    border-radius: 16px;
+    padding: 1.5rem;
+    position: relative;
+  }
+
+  .up-team-title {
+    font-family: 'League Gothic', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 2rem 0;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  .handshake-illustration {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 120px;
+    height: 80px;
+  }
+
+  .up-team-description {
+    font-size: 16px;
+    color: #4a4a4a;
+    margin: 0 0 2rem 0;
+    line-height: 1.4;
+    max-width: 220px;
+  }
+
+  .btn-team {
+    background: #1a1a1a;
     color: white;
-    padding: 4rem 1rem;
-    text-align: center;
-    min-height: 70vh;
+    border: none;
+    border-radius: 24px;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+
+  .btn-team:hover {
+    transform: translateY(-1px);
+    background: #000;
+  }
+
+  /* Program Section */
+  .program-section {
+    margin-bottom: 2rem;
+  }
+
+  .section-tag {
+    background: #FF5722;
+    color: white;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'League Gothic', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  .section-subtitle {
+    font-size: 16px;
+    color: #4a4a4a;
+    margin: 0 0 1.5rem 0;
+  }
+
+  .program-cards {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+
+  .program-card {
+    background: #2C3E50;
+    color: white;
+    border-radius: 16px;
+    padding: 1rem;
+    min-width: 260px;
+    flex-shrink: 0;
+  }
+
+  .program-time {
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    opacity: 0.8;
+  }
+
+  .program-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .program-content h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.2;
+    max-width: 180px;
+  }
+
+  .program-arrow {
+    font-size: 1.2rem;
+    margin-left: 1rem;
+  }
+
+  .btn-program {
+    background: #1a1a1a;
+    color: white;
+    border: none;
+    border-radius: 24px;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+
+  .btn-program:hover {
+    transform: translateY(-1px);
+    background: #000;
+  }
+
+  /* Partners Section */
+  .partners-section {
+    margin-bottom: 2rem;
+  }
+
+  .section-description {
+    font-size: 16px;
+    color: #4a4a4a;
+    line-height: 1.4;
+    margin: 0 0 1.5rem 0;
+  }
+
+  .partner-buttons {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .btn-partner-primary {
+    background: #E8F4E8;
+    color: #1a1a1a;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .btn-partner-secondary {
+    background: #f5f5f5;
+    color: #1a1a1a;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .btn-discover {
+    background: #1a1a1a;
+    color: white;
+    border: none;
+    border-radius: 24px;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+
+  .btn-discover:hover {
+    transform: translateY(-1px);
+    background: #000;
+  }
+
+  /* About Sections */
+  .about-up-sport,
+  .about-festival {
+    margin-bottom: 2rem;
+  }
+
+  .image-container {
+    margin: 1.5rem 0;
+  }
+
+  .sport-image,
+  .accessibility-image {
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+    border-radius: 16px;
+    height: 180px;
+    position: relative;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  
-  .hero-content h1 {
-    font-size: 3.5rem;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-  }
-  
-  .hero-content h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-    opacity: 0.9;
-  }
-  
-  .hero-description {
-    font-size: 1.1rem;
-    max-width: 600px;
-    margin: 0 auto 2rem;
-    line-height: 1.6;
-  }
-  
-  .hero-buttons {
+
+  .people-exercising {
     display: flex;
     gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
+    font-size: 2.5rem;
+    z-index: 2;
   }
-  
-  .btn-primary,
-  .btn-secondary {
-    padding: 1rem 2rem;
+
+  .wheelchair-tennis {
+    font-size: 2.5rem;
+    z-index: 2;
+  }
+
+  .yellow-wave {
+    position: absolute;
+    bottom: -30px;
+    right: -30px;
+    width: 120px;
+    height: 120px;
+    background: #FFD54F;
+    border-radius: 50%;
+    z-index: 1;
+  }
+
+  .btn-learn-more {
+    background: #1a1a1a;
+    color: white;
     border: none;
-    border-radius: 8px;
-    font-size: 1rem;
+    border-radius: 24px;
+    padding: 12px 20px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     transition: all 0.2s;
   }
-  
-  .btn-primary {
-    background: white;
-    color: #2E7D32;
+
+  .btn-learn-more:hover {
+    transform: translateY(-1px);
+    background: #000;
   }
-  
-  .btn-primary:hover {
-    background: #f0f0f0;
-    transform: translateY(-2px);
-  }
-  
-  .btn-secondary {
-    background: transparent;
-    color: white;
-    border: 2px solid white;
-  }
-  
-  .btn-secondary:hover {
-    background: white;
-    color: #2E7D32;
-  }
-  
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-  }
-  
-  .highlights {
-    padding: 4rem 0;
-    background: #f8f9fa;
-  }
-  
-  .highlights h2 {
-    text-align: center;
-    margin-bottom: 3rem;
-    font-size: 2.5rem;
-    color: #2E7D32;
-  }
-  
-  .highlights-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-  }
-  
-  .highlight-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    transition: transform 0.2s;
-  }
-  
-  .highlight-card:hover {
-    transform: translateY(-4px);
-  }
-  
-  .highlight-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-  }
-  
-  .highlight-card h3 {
-    color: #2E7D32;
-    margin-bottom: 1rem;
-    font-size: 1.3rem;
-  }
-  
-  .stats {
-    padding: 4rem 0;
-    background: #2E7D32;
-    color: white;
-  }
-  
-  .stats h2 {
-    text-align: center;
-    margin-bottom: 3rem;
-    font-size: 2.5rem;
-  }
-  
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-  }
-  
-  .stat-card {
-    text-align: center;
-    padding: 2rem;
-  }
-  
-  .stat-number {
-    font-size: 3rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-  }
-  
-  .stat-label {
-    font-size: 1.1rem;
-    opacity: 0.9;
-  }
-  
-  .cta {
-    padding: 4rem 0;
-    text-align: center;
-    background: white;
-  }
-  
-  .cta h2 {
-    font-size: 2.5rem;
-    color: #2E7D32;
-    margin-bottom: 1rem;
-  }
-  
-  .cta p {
-    font-size: 1.1rem;
-    margin-bottom: 2rem;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  @media (max-width: 768px) {
-    .hero-content h1 {
-      font-size: 2.5rem;
+
+  /* Desktop responsive */
+  @media (min-width: 769px) {
+    .container {
+      max-width: 1200px;
+      padding: 0 2rem;
     }
-    
-    .hero-buttons {
-      flex-direction: column;
-      align-items: center;
+
+    .welcome-title {
+      font-size: 32px;
     }
-    
-    .btn-primary,
-    .btn-secondary {
-      width: 100%;
-      max-width: 300px;
+
+    .section-title {
+      font-size: 32px;
     }
-    
-    .highlights h2,
-    .stats h2,
-    .cta h2 {
-      font-size: 2rem;
+
+    .program-cards {
+      grid-template-columns: 1fr 1fr;
+      display: grid;
+    }
+
+    .program-card {
+      min-width: auto;
+    }
+
+    .up-team-card {
+      padding: 3rem;
+    }
+
+    .partner-buttons {
+      max-width: 400px;
     }
   }
 </style>

@@ -1,1002 +1,682 @@
 <script>
-  import { onMount } from 'svelte';
-  
   let currentStep = 1;
-  let userProfile = {
-    // Profil de base
-    name: '',
-    email: '',
-    age: 25,
+  let showConfirmation = false;
+  let formData = {
+    // Étape 1: L'ambiance (2 choix maximum)
+    ambiance: [],
     
-    // Préférences sportives
-    preferredSports: [],
-    skillLevel: 'beginner',
-    availability: [],
+    // Étape 2: Le rythme (1 choix maximum)  
+    rythme: '',
     
-    // Personnalité & social
-    personality: 'balanced',
-    teamSize: 'small',
-    leadership: 'follower',
-    competitiveness: 'recreational',
+    // Étape 3: Le sport - activités problématiques (4 choix maximum)
+    activitesProblematiques: [],
     
-    // Objectifs & motivation
-    goals: [],
-    commitment: 'casual',
-    
-    // Accessibilité
-    mobility: 'normal',
-    accessibilityNeeds: [],
-    
-    // Localisation (simulation)
-    location: 'paris_centre'
+    // Étape 4: L'équipe (1 choix maximum)
+    retrouverTeam: ''
   };
   
-  let matchingResults = [];
-  let isMatching = false;
-  let showResults = false;
-  let selectedMatches = [];
-  let emailSent = false;
+  // Options pour chaque étape selon l'image
+  const ambianceOptions = ['Douceur', 'Partage', 'Énergie', 'Échange', 'Calme', 'Dynamisme'];
+  const rythmeOptions = ['Tranquille', 'Modéré', 'Intense'];
+  const activitesOptions = ['Sport de contact', 'Hauteur', 'Eau', 'Grands groupes', 'Efforts cardio intenses', 'Bruit fort'];
+  const equipeOptions = ['Accompagné(e) du capitaine', 'Je rejoins le groupe', 'En mode explorateur'];
   
-  const sportOptions = [
-    'Football', 'Basketball', 'Tennis', 'Volleyball', 'Badminton', 
-    'Yoga', 'Danse', 'Course', 'Cyclisme', 'Escalade', 'Natation'
-  ];
-  
-  const availabilitySlots = [
-    'Lundi matin', 'Lundi soir', 'Mardi matin', 'Mardi soir',
-    'Mercredi matin', 'Mercredi soir', 'Jeudi matin', 'Jeudi soir',
-    'Vendredi matin', 'Vendredi soir', 'Samedi matin', 'Samedi soir',
-    'Dimanche matin', 'Dimanche soir'
-  ];
-  
-  const goalOptions = [
-    'Rester en forme', 'Rencontrer des gens', 'Compétition', 
-    'Dépassement de soi', 'Détente', 'Apprentissage', 'Fun'
-  ];
-  
-  // Données simulées de participants
-  const mockParticipants = [
-    {
-      id: 1,
-      name: "Marie D.",
-      age: 28,
-      sports: ['Yoga', 'Course'],
-      personality: 'calm',
-      goals: ['Rester en forme', 'Détente'],
-      compatibility: 95,
-      avatar: "👩‍🦰",
-      bio: "Passionnée de bien-être, recherche partenaire pour sessions yoga et course douce."
-    },
-    {
-      id: 2,
-      name: "Ahmed K.",
-      age: 32,
-      sports: ['Football', 'Basketball'],
-      personality: 'energetic',
-      goals: ['Compétition', 'Fun'],
-      compatibility: 88,
-      avatar: "🧑‍🦱",
-      bio: "Ex-footballeur amateur, motivation et bonne humeur garanties !"
-    },
-    {
-      id: 3,
-      name: "Sophie L.",
-      age: 24,
-      sports: ['Danse', 'Volleyball'],
-      personality: 'social',
-      goals: ['Rencontrer des gens', 'Fun'],
-      compatibility: 92,
-      avatar: "👩‍🦳",
-      bio: "Danseuse hip-hop, j'adore les sports d'équipe et l'énergie collective."
-    },
-    {
-      id: 4,
-      name: "Julien M.",
-      age: 35,
-      sports: ['Tennis', 'Cyclisme'],
-      personality: 'competitive',
-      goals: ['Compétition', 'Dépassement de soi'],
-      compatibility: 79,
-      avatar: "🧑‍🦲",
-      bio: "Sportif régulier, cherche partenaires motivés pour progresser ensemble."
-    },
-    {
-      id: 5,
-      name: "Emma R.",
-      age: 22,
-      sports: ['Escalade', 'Yoga'],
-      personality: 'adventurous',
-      goals: ['Apprentissage', 'Dépassement de soi'],
-      compatibility: 85,
-      avatar: "👩‍🦱",
-      bio: "Toujours prête pour de nouveaux défis, dans la bienveillance !"
-    }
-  ];
-  
-  function toggleArrayItem(array, item) {
+  // Fonction pour gérer la sélection multiple avec limites
+  function toggleSelection(array, item, maxSelections) {
     const index = array.indexOf(item);
     if (index > -1) {
+      // Retirer l'item
       array.splice(index, 1);
-    } else {
+    } else if (array.length < maxSelections) {
+      // Ajouter l'item si on n'a pas atteint la limite
       array.push(item);
     }
-    userProfile = { ...userProfile };
+    formData = { ...formData };
   }
   
-  function calculateMatching() {
-    isMatching = true;
-    
-    // Simulation d'algorithme de matching
-    setTimeout(() => {
-      matchingResults = mockParticipants
-        .map(participant => ({
-          ...participant,
-          compatibility: calculateCompatibilityScore(participant)
-        }))
-        .filter(p => p.compatibility > 70)
-        .sort((a, b) => b.compatibility - a.compatibility)
-        .slice(0, 4);
-      
-      isMatching = false;
-      showResults = true;
-    }, 2000);
-  }
-  
-  function calculateCompatibilityScore(participant) {
-    let score = 0;
-    
-    // Sports en commun (30 points max)
-    const commonSports = participant.sports.filter(sport => 
-      userProfile.preferredSports.includes(sport)
-    );
-    score += Math.min(commonSports.length * 15, 30);
-    
-    // Objectifs similaires (25 points max)
-    const commonGoals = participant.goals.filter(goal =>
-      userProfile.goals.includes(goal)
-    );
-    score += Math.min(commonGoals.length * 8, 25);
-    
-    // Age compatible (20 points max)
-    const ageDiff = Math.abs(participant.age - userProfile.age);
-    if (ageDiff <= 5) score += 20;
-    else if (ageDiff <= 10) score += 15;
-    else if (ageDiff <= 15) score += 10;
-    
-    // Personnalité complémentaire (25 points max)
-    if (userProfile.personality === participant.personality) score += 15;
-    else if (
-      (userProfile.personality === 'calm' && participant.personality === 'balanced') ||
-      (userProfile.personality === 'social' && participant.personality === 'energetic')
-    ) score += 20;
-    else score += 10;
-    
-    return Math.min(Math.floor(score + Math.random() * 10), 100);
-  }
-  
-  function toggleMatchSelection(matchId) {
-    const index = selectedMatches.indexOf(matchId);
-    if (index > -1) {
-      selectedMatches.splice(index, 1);
-    } else {
-      selectedMatches.push(matchId);
+  // Navigation
+  function goNext() {
+    if (currentStep < 4) {
+      currentStep++;
     }
-    selectedMatches = [...selectedMatches];
   }
   
-  function sendMatchingEmail() {
-    // Simulation d'envoi d'email
-    emailSent = true;
-    
-    setTimeout(() => {
-      emailSent = false;
-      alert(`Email envoyé à ${userProfile.email} avec ${selectedMatches.length} contact(s) sélectionné(s) !`);
-    }, 1500);
+  function goBack() {
+    if (currentStep > 1) {
+      currentStep--;
+    }
   }
   
-  function resetMatcher() {
-    currentStep = 1;
-    showResults = false;
-    selectedMatches = [];
-    emailSent = false;
+  function submitForm() {
+    // Logique pour traiter le formulaire final
+    console.log('Données du formulaire:', formData);
+    showConfirmation = true;
   }
+  
+  function goToHome() {
+    window.location.hash = '';
+  }
+  
+  function goToProgram() {
+    window.location.hash = 'program';
+  }
+  
+  // Validation pour activer/désactiver le bouton suivant
+  $: canProceed = {
+    1: formData.ambiance.length > 0,
+    2: formData.rythme !== '',
+    3: true, // Cette étape est optionnelle
+    4: formData.retrouverTeam !== ''
+  }[currentStep] ?? false;
+  
 </script>
 
 <div class="team-matcher">
-  <section class="hero">
-    <div class="container">
-      <h1>🤝 Trouvez Votre Équipe Solimouv'</h1>
-      <p class="hero-subtitle">
-        Connectez-vous avec d'autres participants qui partagent vos passions sportives 
-        et vos objectifs. Le sport, c'est encore mieux ensemble !
-      </p>
-    </div>
-  </section>
-  
-  {#if !showResults}
-    <section class="questionnaire">
-      <div class="container">
-        <div class="progress-container">
-          <div class="progress-bar">
-            <div class="progress" style="width: {(currentStep / 6) * 100}%"></div>
-          </div>
-          <span class="step-indicator">Étape {currentStep}/6</span>
-        </div>
-        
-        <div class="question-card">
-          {#if currentStep === 1}
-            <h2>👋 Présentez-vous</h2>
-            <div class="form-grid">
-              <div class="form-group">
-                <label>Prénom *</label>
-                <input type="text" bind:value={userProfile.name} placeholder="Marie" />
-              </div>
-              <div class="form-group">
-                <label>Email *</label>
-                <input type="email" bind:value={userProfile.email} placeholder="marie@email.com" />
-              </div>
-              <div class="form-group">
-                <label>Age</label>
-                <input type="number" bind:value={userProfile.age} min="16" max="80" />
-              </div>
-            </div>
-            
-          {:else if currentStep === 2}
-            <h2>🏃‍♀️ Vos Sports Préférés</h2>
-            <p>Sélectionnez 2-4 sports qui vous intéressent le plus :</p>
-            <div class="sports-grid">
-              {#each sportOptions as sport}
-                <button 
-                  class="sport-option"
-                  class:selected={userProfile.preferredSports.includes(sport)}
-                  on:click={() => toggleArrayItem(userProfile.preferredSports, sport)}
-                >
-                  {sport}
-                </button>
-              {/each}
-            </div>
-            <div class="form-group">
-              <label>Niveau général</label>
-              <select bind:value={userProfile.skillLevel}>
-                <option value="beginner">Débutant</option>
-                <option value="intermediate">Intermédiaire</option>
-                <option value="advanced">Avancé</option>
-              </select>
-            </div>
-            
-          {:else if currentStep === 3}
-            <h2>📅 Vos Disponibilités</h2>
-            <p>Quand êtes-vous généralement disponible ?</p>
-            <div class="availability-grid">
-              {#each availabilitySlots as slot}
-                <button 
-                  class="availability-slot"
-                  class:selected={userProfile.availability.includes(slot)}
-                  on:click={() => toggleArrayItem(userProfile.availability, slot)}
-                >
-                  {slot}
-                </button>
-              {/each}
-            </div>
-            
-          {:else if currentStep === 4}
-            <h2>🎭 Votre Personnalité Sportive</h2>
-            <div class="personality-options">
-              <label class="personality-card">
-                <input type="radio" bind:group={userProfile.personality} value="calm" />
-                <div class="card-content">
-                  <h3>🧘‍♀️ Zen</h3>
-                  <p>Privilégie la détente et la progression personnelle</p>
-                </div>
-              </label>
-              <label class="personality-card">
-                <input type="radio" bind:group={userProfile.personality} value="social" />
-                <div class="card-content">
-                  <h3>🎉 Social</h3>
-                  <p>Adore rencontrer du monde et créer des liens</p>
-                </div>
-              </label>
-              <label class="personality-card">
-                <input type="radio" bind:group={userProfile.personality} value="energetic" />
-                <div class="card-content">
-                  <h3>⚡ Énergique</h3>
-                  <p>Dynamique et motivant pour les autres</p>
-                </div>
-              </label>
-              <label class="personality-card">
-                <input type="radio" bind:group={userProfile.personality} value="competitive" />
-                <div class="card-content">
-                  <h3>🏆 Compétitif</h3>
-                  <p>Aime la performance et les défis</p>
-                </div>
-              </label>
-              <label class="personality-card">
-                <input type="radio" bind:group={userProfile.personality} value="balanced" />
-                <div class="card-content">
-                  <h3>⚖️ Équilibré</h3>
-                  <p>Un peu de tout selon l'humeur</p>
-                </div>
-              </label>
-            </div>
-            
-          {:else if currentStep === 5}
-            <h2>🎯 Vos Objectifs</h2>
-            <p>Qu'est-ce qui vous motive dans le sport ?</p>
-            <div class="goals-grid">
-              {#each goalOptions as goal}
-                <button 
-                  class="goal-option"
-                  class:selected={userProfile.goals.includes(goal)}
-                  on:click={() => toggleArrayItem(userProfile.goals, goal)}
-                >
-                  {goal}
-                </button>
-              {/each}
-            </div>
-            
-            <div class="form-group">
-              <label>Engagement souhaité</label>
-              <select bind:value={userProfile.commitment}>
-                <option value="casual">Occasionnel (1x/mois)</option>
-                <option value="regular">Régulier (1x/semaine)</option>
-                <option value="intensive">Intensif (2-3x/semaine)</option>
-              </select>
-            </div>
-            
-          {:else if currentStep === 6}
-            <h2>♿ Besoins Particuliers</h2>
-            <div class="form-group">
-              <label>Mobilité</label>
-              <select bind:value={userProfile.mobility}>
-                <option value="normal">Normale</option>
-                <option value="reduced">Réduite</option>
-                <option value="wheelchair">Fauteuil roulant</option>
-              </select>
-            </div>
-            
-            <p>Avez-vous des besoins d'accessibilité spécifiques ?</p>
-            <div class="accessibility-options">
-              {#each ['Accompagnement', 'Matériel adapté', 'Communication visuelle', 'Communication gestuelle', 'Rythme adapté'] as need}
-                <button 
-                  class="accessibility-option"
-                  class:selected={userProfile.accessibilityNeeds.includes(need)}
-                  on:click={() => toggleArrayItem(userProfile.accessibilityNeeds, need)}
-                >
-                  {need}
-                </button>
-              {/each}
-            </div>
-            
-            <div class="final-check">
-              <h3>🎯 Récapitulatif</h3>
-              <div class="summary">
-                <p><strong>Sports:</strong> {userProfile.preferredSports.join(', ')}</p>
-                <p><strong>Disponibilités:</strong> {userProfile.availability.length} créneaux</p>
-                <p><strong>Objectifs:</strong> {userProfile.goals.join(', ')}</p>
-              </div>
-            </div>
-          {/if}
-        </div>
-        
-        <div class="navigation">
-          {#if currentStep > 1}
-            <button class="btn-secondary" on:click={() => currentStep--}>
-              ← Précédent
-            </button>
-          {/if}
-          
-          {#if currentStep < 6}
-            <button 
-              class="btn-primary"
-              disabled={
-                (currentStep === 1 && (!userProfile.name || !userProfile.email)) ||
-                (currentStep === 2 && userProfile.preferredSports.length === 0) ||
-                (currentStep === 5 && userProfile.goals.length === 0)
-              }
-              on:click={() => currentStep++}
-            >
-              Suivant →
-            </button>
-          {:else}
-            <button 
-              class="btn-primary btn-large"
-              on:click={calculateMatching}
-              disabled={isMatching || userProfile.preferredSports.length === 0}
-            >
-              {isMatching ? '🔍 Recherche en cours...' : '🤝 Trouver mon équipe !'}
-            </button>
-          {/if}
+  {#if !showConfirmation}
+    <!-- Header avec icône de retour et barre de progression -->
+    <header class="form-header">
+      <button class="back-arrow" on:click={() => window.history.back()}>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      
+      <!-- Barre de progression -->
+      <div class="progress-container">
+        <div class="progress-bar">
+          <div class="progress" style="width: {(currentStep / 4) * 100}%"></div>
         </div>
       </div>
-    </section>
-    
-  {:else}
-    <section class="results">
-      <div class="container">
-        <div class="results-header">
-          <h2>🎉 Vos Partenaires Sportifs</h2>
-          <p>Voici {matchingResults.length} participant(s) compatibles avec votre profil :</p>
-        </div>
-        
-        <div class="matches-grid">
-          {#each matchingResults as match}
-            <div class="match-card" class:selected={selectedMatches.includes(match.id)}>
-              <div class="match-header">
-                <span class="avatar">{match.avatar}</span>
-                <div class="match-info">
-                  <h3>{match.name}</h3>
-                  <div class="compatibility">
-                    <span class="score">{match.compatibility}%</span>
-                    <span class="label">compatibilité</span>
-                  </div>
-                </div>
-                <button 
-                  class="select-btn"
-                  class:selected={selectedMatches.includes(match.id)}
-                  on:click={() => toggleMatchSelection(match.id)}
-                >
-                  {selectedMatches.includes(match.id) ? '✓' : '+'}
-                </button>
-              </div>
-              
-              <p class="bio">{match.bio}</p>
-              
-              <div class="match-details">
-                <div class="detail-row">
-                  <strong>Sports:</strong> 
-                  <span class="tags">
-                    {#each match.sports as sport}
-                      <span class="tag">{sport}</span>
-                    {/each}
-                  </span>
-                </div>
-                <div class="detail-row">
-                  <strong>Objectifs:</strong>
-                  <span>{match.goals.join(', ')}</span>
-                </div>
-              </div>
-            </div>
-          {/each}
-        </div>
-        
-        <div class="actions">
-          <div class="email-section">
-            <h3>📧 Recevoir les contacts</h3>
-            <p>Sélectionnez les personnes qui vous intéressent et recevez leurs coordonnées par email.</p>
-            
-            <div class="email-controls">
-              <input 
-                type="email" 
-                bind:value={userProfile.email} 
-                placeholder="votre@email.com"
-                class="email-input"
-              />
+    </header>
+
+    <!-- Formulaire principal -->
+    <div class="form-container">
+    <div class="form-content">
+      <!-- Étape 1: L'ambiance -->
+      {#if currentStep === 1}
+        <div class="step">
+          <div class="step-tag ambiance">L'ambiance</div>
+          <h1 class="step-title">QUELLE ATMOSPHÈRE VOUS CORRESPOND LE PLUS AUJOURD'HUI ?</h1>
+          <p class="step-subtitle">2 choix maximum</p>
+          
+          <div class="options-grid six-items">
+            {#each ambianceOptions as option}
               <button 
-                class="btn-primary"
-                disabled={selectedMatches.length === 0 || !userProfile.email || emailSent}
-                on:click={sendMatchingEmail}
+                class="option-btn"
+                class:selected={formData.ambiance.includes(option)}
+                on:click={() => toggleSelection(formData.ambiance, option, 2)}
               >
-                {#if emailSent}
-                  ✅ Envoyé !
-                {:else}
-                  📤 Envoyer ({selectedMatches.length})
-                {/if}
+                {option}
               </button>
-            </div>
-          </div>
-          
-          <div class="secondary-actions">
-            <button class="btn-secondary" on:click={resetMatcher}>
-              🔄 Refaire le test
-            </button>
-            <button class="btn-secondary" on:click={() => window.location.hash = 'contact'}>
-              📞 Nous contacter
-            </button>
+            {/each}
           </div>
         </div>
+      
+      <!-- Étape 2: Le rythme -->
+      {:else if currentStep === 2}
+        <div class="step">
+          <div class="step-tag rythme">Le rythme</div>
+          <h1 class="step-title">À QUEL RYTHME AVEZ VOUS ENVIE DE BOUGER ?</h1>
+          <p class="step-subtitle">1 choix maximum</p>
+          
+          <div class="options-grid three-items">
+            {#each rythmeOptions as option}
+              <button 
+                class="option-btn"
+                class:selected={formData.rythme === option}
+                on:click={() => formData.rythme = option}
+              >
+                {option}
+              </button>
+            {/each}
+          </div>
+        </div>
+      
+      <!-- Étape 3: Le sport -->
+      {:else if currentStep === 3}
+        <div class="step">
+          <div class="step-tag sport">Le sport</div>
+          <h1 class="step-title">Y A-T-IL DES ACTIVITÉS AVEC LESQUELLES VOUS N'ÊTES PAS À L'AISE ?</h1>
+          <p class="step-subtitle">4 choix maximum</p>
+          
+          <div class="options-grid six-items">
+            {#each activitesOptions as option}
+              <button 
+                class="option-btn"
+                class:selected={formData.activitesProblematiques.includes(option)}
+                on:click={() => toggleSelection(formData.activitesProblematiques, option, 4)}
+              >
+                {option}
+              </button>
+            {/each}
+          </div>
+        </div>
+      
+      <!-- Étape 4: L'équipe -->
+      {:else if currentStep === 4}
+        <div class="step">
+          <div class="step-tag equipe">L'équipe</div>
+          <h1 class="step-title">COMMENT SOUHAITEZ-VOUS RETROUVER VOTRE TEAM AU FESTIVAL ?</h1>
+          <p class="step-subtitle">1 choix maximum</p>
+          
+          <div class="options-grid single-column">
+            {#each equipeOptions as option}
+              <button 
+                class="option-btn"
+                class:selected={formData.retrouverTeam === option}
+                on:click={() => formData.retrouverTeam = option}
+              >
+                {option}
+              </button>
+            {/each}
+          </div>
+        </div>
+      {/if}
+    </div>
+
+    <!-- Navigation immédiatement après les options -->
+    <div class="form-navigation">
+      {#if currentStep > 1}
+        <button class="nav-btn secondary" on:click={goBack}>
+          Retour
+        </button>
+      {:else}
+        <div></div>
+      {/if}
+      
+      {#if currentStep < 4}
+        <button 
+          class="nav-btn primary" 
+          class:disabled={!canProceed}
+          disabled={!canProceed}
+          on:click={goNext}
+        >
+          Suivant 
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      {:else}
+        <button 
+          class="nav-btn primary" 
+          class:disabled={!canProceed}
+          disabled={!canProceed}
+          on:click={submitForm}
+        >
+          Terminer
+        </button>
+      {/if}
+    </div>
+  </div>
+
+  {:else}
+    <!-- Page de confirmation -->
+    <div class="confirmation-container">
+      <div class="confirmation-content">
+        <!-- Illustration des mains qui se serrent -->
+        <div class="handshake-illustration">
+          <svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+            <!-- Bras orange -->
+            <path d="M20 80 Q40 60, 80 70 Q100 75, 120 85" stroke="#FF5722" stroke-width="20" fill="none" stroke-linecap="round"/>
+            <!-- Bras bleu foncé -->
+            <path d="M180 20 Q160 40, 120 50 Q100 55, 80 65" stroke="#2C3E50" stroke-width="20" fill="none" stroke-linecap="round"/>
+            <!-- Main orange -->
+            <circle cx="85" cy="72" r="12" fill="#FF5722"/>
+            <!-- Main bleue foncée -->
+            <circle cx="115" cy="58" r="12" fill="#2C3E50"/>
+            <!-- Petites lignes bleues d'effet -->
+            <g stroke="#4FC3F7" stroke-width="2">
+              <line x1="95" y1="45" x2="100" y2="40"/>
+              <line x1="105" y1="42" x2="110" y2="37"/>
+              <line x1="98" y1="52" x2="103" y2="47"/>
+              <line x1="92" y1="38" x2="97" y2="33"/>
+            </g>
+          </svg>
+        </div>
+        
+        <!-- Titre de confirmation -->
+        <h1 class="confirmation-title">SUPER ! VOTRE TEAM VOUS ATTEND AU FESTIVAL, AMUSEZ-VOUS BIEN !</h1>
+        
+        <!-- Boutons d'action -->
+        <div class="confirmation-actions">
+          <button class="btn-program" on:click={goToProgram}>
+            Voir le programme
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          
+          <button class="btn-home" on:click={goToHome}>
+            Retourner à l'accueil
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
       </div>
-    </section>
+    </div>
   {/if}
 </div>
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=League+Gothic:wght@400;700&family=Poppins:wght@400;500;600;700;900&display=swap');
+  
   .team-matcher {
     min-height: 100vh;
-    background: linear-gradient(135deg, #E8F5E8 0%, #F1F8E9 50%, #E8F5E8 100%);
+    background: white;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
   }
   
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 1rem;
+  /* Header avec bouton retour */
+  .form-header {
+    padding: 1rem 1rem 1.5rem;
+    background: white;
   }
   
-  .hero {
-    padding: 3rem 0;
-    text-align: center;
-    background: linear-gradient(135deg, #2E7D32, #4CAF50);
-    color: white;
+  .back-arrow {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #FF5722;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.2s;
   }
   
-  .hero h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
+  .back-arrow:hover {
+    background: #FFF3E0;
   }
   
-  .hero-subtitle {
-    font-size: 1.2rem;
-    opacity: 0.9;
-    max-width: 600px;
-    margin: 0 auto;
-    line-height: 1.6;
-  }
-  
-  .questionnaire {
-    padding: 3rem 0;
-  }
-  
+  /* Barre de progression */
   .progress-container {
-    margin-bottom: 2rem;
+    margin-top: 1rem;
   }
   
   .progress-bar {
     width: 100%;
-    height: 8px;
-    background: #ddd;
-    border-radius: 4px;
+    height: 4px;
+    background: #e0e0e0;
+    border-radius: 2px;
     overflow: hidden;
-    margin-bottom: 0.5rem;
   }
   
   .progress {
     height: 100%;
-    background: linear-gradient(90deg, #4CAF50, #66BB6A);
+    background: #FF5722;
+    border-radius: 2px;
     transition: width 0.3s ease;
   }
   
-  .step-indicator {
-    color: #666;
-    font-size: 0.9rem;
-  }
-  
-  .question-card {
-    background: white;
-    padding: 2.5rem;
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-    margin-bottom: 2rem;
-  }
-  
-  .question-card h2 {
-    color: #2E7D32;
-    margin-bottom: 1.5rem;
-    font-size: 1.8rem;
-  }
-  
-  .question-card p {
-    color: #666;
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
-  }
-  
-  .form-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-  }
-  
-  .form-group {
-    margin-bottom: 1.5rem;
-  }
-  
-  .form-group label {
-    display: block;
-    color: #333;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-  }
-  
-  .form-group input,
-  .form-group select {
+  /* Container principal du formulaire */
+  .form-container {
+    flex: 1;
+    padding: 1.5rem 1.5rem 1rem;
+    max-width: 400px;
+    margin: 0 auto;
     width: 100%;
-    padding: 0.75rem;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: border-color 0.2s;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 120px);
   }
   
-  .form-group input:focus,
-  .form-group select:focus {
-    outline: none;
-    border-color: #4CAF50;
+  /* Contenu du formulaire */
+  .form-content {
+    flex: 0 0 auto;
   }
   
-  .sports-grid,
-  .availability-grid,
-  .goals-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 0.75rem;
+  /* Étapes */
+  .step {
+    text-align: center;
+  }
+  
+  .step-tag {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
     margin-bottom: 1.5rem;
-  }
-  
-  .sport-option,
-  .availability-slot,
-  .goal-option,
-  .accessibility-option {
-    padding: 0.75rem;
-    border: 2px solid #ddd;
-    background: white;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: center;
-    font-size: 0.9rem;
-  }
-  
-  .sport-option:hover,
-  .availability-slot:hover,
-  .goal-option:hover,
-  .accessibility-option:hover {
-    border-color: #4CAF50;
-  }
-  
-  .sport-option.selected,
-  .availability-slot.selected,
-  .goal-option.selected,
-  .accessibility-option.selected {
-    background: #4CAF50;
     color: white;
-    border-color: #4CAF50;
   }
   
-  .personality-options {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
+  .step-tag.ambiance {
+    background: #FF5722;
   }
   
-  .personality-card {
-    cursor: pointer;
+  .step-tag.rythme {
+    background: #FF5722;
   }
   
-  .personality-card input[type="radio"] {
-    display: none;
+  .step-tag.sport {
+    background: #FF5722;
   }
   
-  .card-content {
-    padding: 1.5rem;
-    border: 2px solid #ddd;
-    border-radius: 12px;
-    text-align: center;
-    transition: all 0.2s;
+  .step-tag.equipe {
+    background: #FF5722;
   }
   
-  .card-content h3 {
-    color: #2E7D32;
-    margin-bottom: 0.5rem;
+  .step-title {
+    font-family: 'League Gothic', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    margin: 0 0 1rem 0;
   }
   
-  .card-content p {
+  .step-subtitle {
+    font-family: 'Poppins', sans-serif;
     color: #666;
-    margin: 0;
-    font-size: 0.9rem;
+    font-size: 16px;
+    margin-bottom: 2.5rem;
   }
   
-  .personality-card:hover .card-content {
-    border-color: #4CAF50;
-  }
-  
-  .personality-card input[type="radio"]:checked + .card-content {
-    background: #4CAF50;
-    color: white;
-    border-color: #4CAF50;
-  }
-  
-  .personality-card input[type="radio"]:checked + .card-content h3,
-  .personality-card input[type="radio"]:checked + .card-content p {
-    color: white;
-  }
-  
-  .accessibility-options {
+  /* Grille d'options */
+  .options-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 0.75rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0;
+    justify-content: center;
   }
   
-  .final-check {
-    margin-top: 2rem;
-    padding: 1.5rem;
-    background: #F1F8E9;
-    border-radius: 8px;
+  /* 6 éléments - grille 3x2 compacte */
+  .options-grid.six-items {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
   }
   
-  .final-check h3 {
-    color: #2E7D32;
-    margin-bottom: 1rem;
+  /* 3 éléments - grille 3x1 avec plus d'espace */
+  .options-grid.three-items {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    max-width: 90%;
+    margin: 0 auto;
   }
   
-  .summary p {
-    margin: 0.5rem 0;
+  /* Éléments en une seule colonne - dernière étape */
+  .options-grid.single-column {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    max-width: 80%;
+    margin: 0 auto;
+  }
+  
+  .option-btn {
+    padding: 1rem 0.75rem;
+    border: 1px solid #e0e0e0;
+    background: white;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
     color: #333;
+    text-align: center;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
-  .navigation {
+  .option-btn:hover {
+    border-color: #FF5722;
+    background: #FFF3E0;
+  }
+  
+  .option-btn.selected {
+    background: #FF5722;
+    color: white;
+    border-color: #FF5722;
+  }
+  
+  /* Navigation collée aux options */
+  .form-navigation {
+    background: white;
+    padding: 0.75rem 0;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 1rem;
-    flex-wrap: wrap;
+    margin-top: 0;
   }
   
-  .btn-primary,
-  .btn-secondary {
-    padding: 1rem 2rem;
+  .nav-btn {
     border: none;
-    border-radius: 8px;
-    font-size: 1rem;
+    border-radius: 25px;
+    padding: 12px 24px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
+    min-width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
   }
   
-  .btn-primary {
-    background: #4CAF50;
+  .nav-btn.secondary {
+    background: white;
+    color: #666;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .nav-btn.secondary:hover {
+    background: #f5f5f5;
+  }
+  
+  .nav-btn.primary {
+    background: #FF5722;
     color: white;
   }
   
-  .btn-primary:hover:not(:disabled) {
-    background: #45a049;
-    transform: translateY(-2px);
+  .nav-btn.primary:hover:not(.disabled) {
+    background: #E64A19;
   }
   
-  .btn-primary:disabled {
-    opacity: 0.6;
+  .nav-btn.disabled {
+    opacity: 0.5;
     cursor: not-allowed;
   }
   
-  .btn-large {
-    padding: 1.2rem 3rem;
-    font-size: 1.1rem;
-  }
-  
-  .btn-secondary {
-    background: white;
-    color: #4CAF50;
-    border: 2px solid #4CAF50;
-  }
-  
-  .btn-secondary:hover {
-    background: #4CAF50;
-    color: white;
-  }
-  
-  .results {
-    padding: 3rem 0;
-  }
-  
-  .results-header {
-    text-align: center;
-    margin-bottom: 3rem;
-  }
-  
-  .results-header h2 {
-    color: #2E7D32;
-    font-size: 2.2rem;
-    margin-bottom: 1rem;
-  }
-  
-  .matches-grid {
-    display: grid;
-    gap: 1.5rem;
-    margin-bottom: 3rem;
-  }
-  
-  .match-card {
-    background: white;
-    border-radius: 16px;
-    padding: 2rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-  }
-  
-  .match-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-  }
-  
-  .match-card.selected {
-    border-color: #4CAF50;
-    background: #F1F8E9;
-  }
-  
-  .match-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-  }
-  
-  .avatar {
-    font-size: 3rem;
-    flex-shrink: 0;
-  }
-  
-  .match-info {
-    flex: 1;
-  }
-  
-  .match-info h3 {
-    color: #2E7D32;
-    margin: 0 0 0.5rem;
-    font-size: 1.3rem;
-  }
-  
-  .compatibility {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  
-  .score {
-    background: #4CAF50;
-    color: white;
-    padding: 0.25rem 0.75rem;
-    border-radius: 15px;
-    font-weight: bold;
-    font-size: 0.9rem;
-  }
-  
-  .label {
-    color: #666;
-    font-size: 0.8rem;
-  }
-  
-  .select-btn {
-    width: 40px;
-    height: 40px;
-    border: 2px solid #ddd;
-    background: white;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    transition: all 0.2s;
-  }
-  
-  .select-btn:hover {
-    border-color: #4CAF50;
-  }
-  
-  .select-btn.selected {
-    background: #4CAF50;
-    color: white;
-    border-color: #4CAF50;
-  }
-  
-  .bio {
-    color: #666;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-    font-style: italic;
-  }
-  
-  .match-details {
-    space-y: 0.75rem;
-  }
-  
-  .detail-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.5rem;
-    margin-bottom: 0.75rem;
-  }
-  
-  .detail-row strong {
-    color: #2E7D32;
-    flex-shrink: 0;
-  }
-  
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.25rem;
-  }
-  
-  .tag {
-    background: #E8F5E8;
-    color: #2E7D32;
-    padding: 0.25rem 0.75rem;
-    border-radius: 12px;
-    font-size: 0.8rem;
-  }
-  
-  .actions {
-    background: white;
-    padding: 2.5rem;
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-  }
-  
-  .email-section {
-    margin-bottom: 2rem;
-  }
-  
-  .email-section h3 {
-    color: #2E7D32;
-    margin-bottom: 1rem;
-  }
-  
-  .email-section p {
-    color: #666;
-    margin-bottom: 1.5rem;
-  }
-  
-  .email-controls {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-  
-  .email-input {
-    flex: 1;
-    min-width: 200px;
-    padding: 0.75rem;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    font-size: 1rem;
-  }
-  
-  .email-input:focus {
-    outline: none;
-    border-color: #4CAF50;
-  }
-  
-  .secondary-actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  
-  @media (max-width: 768px) {
-    .hero h1 {
-      font-size: 2rem;
+  /* Responsive Design */
+  @media (max-width: 360px) {
+    .form-container {
+      padding: 1.5rem 1rem;
     }
     
-    .question-card {
+    /* Très petits écrans - garde 3 colonnes mais ajuste les tailles */
+    .options-grid.six-items {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.4rem;
+    }
+    
+    .options-grid.three-items {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.4rem;
+    }
+    
+    .options-grid.single-column {
+      grid-template-columns: 1fr;
+      gap: 0.6rem;
+      max-width: 100%;
+    }
+    
+    .option-btn {
+      padding: 0.8rem 0.3rem;
+      font-size: 14px;
+    }
+    
+    .form-navigation {
+      padding: 0.5rem 0;
+    }
+    
+    .nav-btn {
+      flex: 1;
+      min-width: auto;
+    }
+  }
+  
+  @media (min-width: 361px) and (max-width: 768px) {
+    .form-container {
+      max-width: 500px;
       padding: 2rem;
     }
     
-    .form-grid,
-    .sports-grid,
-    .availability-grid,
-    .goals-grid,
-    .personality-options,
-    .accessibility-options {
-      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    .options-grid.six-items {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
     }
     
-    .navigation {
-      justify-content: center;
+    .options-grid.three-items {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.8rem;
     }
     
-    .btn-primary,
-    .btn-secondary {
-      flex: 1;
-      min-width: 120px;
+    .options-grid.single-column {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      max-width: 70%;
     }
     
-    .email-controls {
-      flex-direction: column;
+    .option-btn {
+      padding: 1rem 0.5rem;
+    }
+  }
+  
+  @media (min-width: 769px) {
+    .form-container {
+      max-width: 600px;
+      padding: 3rem 2rem;
     }
     
-    .email-input {
-      min-width: auto;
+    .options-grid.six-items {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    
+    .options-grid.three-items {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+    
+    .options-grid.single-column {
+      grid-template-columns: 1fr;
+      gap: 1.2rem;
+      max-width: 60%;
+    }
+    
+    .option-btn {
+      padding: 1.2rem;
+    }
+  }
+
+  /* Page de confirmation */
+  .confirmation-container {
+    min-height: 100vh;
+    background: #E8F4E8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+  }
+
+  .confirmation-content {
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    background: white;
+    padding: 3rem 2rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  }
+
+  .handshake-illustration {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .confirmation-title {
+    font-family: 'League Gothic', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #2C3E50;
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    margin: 0 0 2.5rem 0;
+  }
+
+  .confirmation-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .btn-program {
+    background: #2C3E50;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 16px 24px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .btn-program:hover {
+    background: #34495e;
+    transform: translateY(-2px);
+  }
+
+  .btn-home {
+    background: none;
+    color: #FF5722;
+    border: none;
+    padding: 16px 24px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .btn-home:hover {
+    background: #FFF3E0;
+    border-radius: 25px;
+  }
+
+  /* Responsive pour la confirmation */
+  @media (max-width: 480px) {
+    .confirmation-content {
+      padding: 2rem 1.5rem;
+    }
+    
+    .handshake-illustration svg {
+      width: 150px;
+      height: 90px;
+    }
+    
+    .confirmation-title {
+      font-size: 22px;
     }
   }
 </style>
