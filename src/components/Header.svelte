@@ -2,89 +2,32 @@
   export let navigate;
   export let currentScreen;
   
-  let mobileMenuOpen = false;
-  
-  function toggleMobileMenu() {
-    mobileMenuOpen = !mobileMenuOpen;
-  }
-  
   function handleNavigate(screen) {
     navigate(screen);
-    mobileMenuOpen = false;
   }
 </script>
 
 <header class="header">
   <div class="container">
-    <div class="logo">
-      <button on:click={() => handleNavigate('home')} class="logo-btn">
-        <h1>Solimouv'</h1>
-        <span class="tagline">Festival du Sport pour Tous</span>
-      </button>
-    </div>
-    
-    <nav class="nav-desktop">
-      <button 
-        class:active={currentScreen === 'home'}
-        on:click={() => handleNavigate('home')}
-      >
-        Accueil
-      </button>
-      <button 
-        class:active={currentScreen === 'about'}
-        on:click={() => handleNavigate('about')}
-      >
-        À Propos
-      </button>
-      <button 
-        class:active={currentScreen === 'program'}
-        on:click={() => handleNavigate('program')}
-      >
-        Programme
-      </button>
-      <button 
-        class:active={currentScreen === 'team-matcher'}
-        on:click={() => handleNavigate('team-matcher')}
-      >
-        Trouvez votre équipe
-      </button>
-      <button 
-        class:active={currentScreen === 'partners'}
-        on:click={() => handleNavigate('partners')}
-      >
-        Partenaires
-      </button>
-      <button 
-        class:active={currentScreen === 'contact'}
-        on:click={() => handleNavigate('contact')}
-      >
-        Contact
-      </button>
-    </nav>
-    
-    <button class="mobile-menu-btn" on:click={toggleMobileMenu}>
-      <span></span>
-      <span></span>
-      <span></span>
+    <button on:click={() => handleNavigate('home')} class="logo-btn">
+      <img src="/logo.png" alt="Solimouv'" class="logo" />
     </button>
+    
+    <div class="profile-icon">
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="24" fill="white" stroke="#E0E0E0" stroke-width="2"/>
+        <circle cx="24" cy="24" r="18" fill="#FF5722"/>
+        <circle cx="19" cy="20" r="2" fill="white"/>
+        <circle cx="29" cy="20" r="2" fill="white"/>
+        <path d="M16 28 C18 32, 30 32, 32 28" stroke="white" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
   </div>
-  
-  {#if mobileMenuOpen}
-    <nav class="nav-mobile">
-      <button on:click={() => handleNavigate('home')}>Accueil</button>
-      <button on:click={() => handleNavigate('about')}>À Propos</button>
-      <button on:click={() => handleNavigate('program')}>Programme</button>
-      <button on:click={() => handleNavigate('team-matcher')}>Trouvez votre équipe</button>
-      <button on:click={() => handleNavigate('partners')}>Partenaires</button>
-      <button on:click={() => handleNavigate('contact')}>Contact</button>
-    </nav>
-  {/if}
 </header>
 
 <style>
   .header {
-    background: #2E7D32;
-    color: white;
+    background: white;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     position: sticky;
     top: 0;
@@ -94,100 +37,68 @@
   .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 70px;
+    height: 80px;
   }
   
   .logo-btn {
     background: none;
     border: none;
-    color: white;
     cursor: pointer;
-    text-align: left;
-  }
-  
-  .logo h1 {
-    font-size: 1.8rem;
-    font-weight: bold;
-    margin: 0;
-  }
-  
-  .tagline {
-    font-size: 0.9rem;
-    opacity: 0.9;
-  }
-  
-  .nav-desktop {
+    padding: 0;
     display: flex;
-    gap: 2rem;
+    align-items: center;
   }
   
-  .nav-desktop button {
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    transition: all 0.2s;
-    font-size: 1rem;
+  .logo {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
   }
   
-  .nav-desktop button:hover,
-  .nav-desktop button.active {
-    background: rgba(255,255,255,0.1);
-  }
-  
-  .mobile-menu-btn {
-    display: none;
-    flex-direction: column;
-    gap: 4px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem;
-  }
-  
-  .mobile-menu-btn span {
-    width: 25px;
-    height: 2px;
-    background: white;
-    transition: all 0.2s;
-  }
-  
-  .nav-mobile {
-    background: #1B5E20;
-    padding: 1rem;
+  .profile-icon {
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  
-  .nav-mobile button {
-    background: none;
-    border: none;
-    color: white;
+    align-items: center;
     cursor: pointer;
-    padding: 1rem;
-    text-align: left;
-    border-radius: 4px;
-    font-size: 1rem;
+    transition: transform 0.2s ease;
   }
   
-  .nav-mobile button:hover {
-    background: rgba(255,255,255,0.1);
+  .profile-icon:hover {
+    transform: scale(1.05);
   }
   
   @media (max-width: 768px) {
-    .nav-desktop {
-      display: none;
+    .container {
+      padding: 1rem;
+      height: 70px;
     }
     
-    .mobile-menu-btn {
-      display: flex;
+    .logo {
+      height: 40px;
+    }
+    
+    .profile-icon svg {
+      width: 40px;
+      height: 40px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .container {
+      padding: 0.5rem 1rem;
+      height: 60px;
+    }
+    
+    .logo {
+      height: 36px;
+    }
+    
+    .profile-icon svg {
+      width: 36px;
+      height: 36px;
     }
   }
 </style>

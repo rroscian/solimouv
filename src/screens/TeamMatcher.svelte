@@ -215,23 +215,7 @@
       <div class="confirmation-content">
         <!-- Illustration des mains qui se serrent -->
         <div class="handshake-illustration">
-          <svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-            <!-- Bras orange -->
-            <path d="M20 80 Q40 60, 80 70 Q100 75, 120 85" stroke="#FF5722" stroke-width="20" fill="none" stroke-linecap="round"/>
-            <!-- Bras bleu foncé -->
-            <path d="M180 20 Q160 40, 120 50 Q100 55, 80 65" stroke="#2C3E50" stroke-width="20" fill="none" stroke-linecap="round"/>
-            <!-- Main orange -->
-            <circle cx="85" cy="72" r="12" fill="#FF5722"/>
-            <!-- Main bleue foncée -->
-            <circle cx="115" cy="58" r="12" fill="#2C3E50"/>
-            <!-- Petites lignes bleues d'effet -->
-            <g stroke="#4FC3F7" stroke-width="2">
-              <line x1="95" y1="45" x2="100" y2="40"/>
-              <line x1="105" y1="42" x2="110" y2="37"/>
-              <line x1="98" y1="52" x2="103" y2="47"/>
-              <line x1="92" y1="38" x2="97" y2="33"/>
-            </g>
-          </svg>
+          <img src="/handshake.png" alt="Handshake" class="handshake-img" />
         </div>
         
         <!-- Titre de confirmation -->
@@ -596,12 +580,21 @@
     padding: 3rem 2rem;
     border-radius: 16px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    position: relative;
   }
 
   .handshake-illustration {
-    margin-bottom: 2rem;
-    display: flex;
-    justify-content: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    height: 80px;
+  }
+
+  .handshake-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 
   .confirmation-title {
@@ -668,11 +661,6 @@
   @media (max-width: 480px) {
     .confirmation-content {
       padding: 2rem 1.5rem;
-    }
-    
-    .handshake-illustration svg {
-      width: 150px;
-      height: 90px;
     }
     
     .confirmation-title {

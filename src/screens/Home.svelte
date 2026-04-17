@@ -6,15 +6,7 @@
   <!-- Header avec message de bienvenue -->
   <section class="welcome-header">
     <div class="container">
-      <div class="header-content">
-        <div class="logo">
-          <span class="logo-text">Solimouv</span>
-        </div>
-        <div class="user-icon">
-          <div class="user-avatar">😊</div>
-        </div>
-      </div>
-      <h1 class="welcome-title">BIENVENU À SOLIMOUV LUCAS !</h1>
+      <h1 class="welcome-title">BIENVENUE À SOLIMOUV LUCAS !</h1>
       <p class="welcome-subtitle">
         L'événement où chaque pas, chaque mouvement, est un prétexte pour créer du lien.
       </p>
@@ -28,11 +20,7 @@
         <div class="up-team-content">
           <h2 class="up-team-title">UP TEAM</h2>
           <div class="handshake-illustration">
-            <svg width="100" height="80" viewBox="0 0 100 80">
-              <path d="M20 40 Q50 20 80 40" stroke="#FF5722" stroke-width="8" fill="none"/>
-              <circle cx="15" cy="45" r="8" fill="#2C3E50"/>
-              <circle cx="85" cy="45" r="8" fill="#FF5722"/>
-            </svg>
+            <img src="/handshake.png" alt="Handshake" class="handshake-img" />
           </div>
           <p class="up-team-description">
             Ne craignez plus d'arriver seul ou de ne pas savoir où aller. 
@@ -59,7 +47,7 @@
             <span>🕒</span> Aujourd'hui à 13h30
           </div>
           <div class="program-content">
-            <h3>INITIATION BOX MIXTE</h3>
+            <h3>INITIATION BOXE MIXTE</h3>
             <div class="program-arrow">↗</div>
           </div>
         </div>
@@ -119,10 +107,7 @@
       
       <div class="image-container">
         <div class="sport-image">
-          <div class="people-exercising">
-            <div class="person-1">🏃‍♀️</div>
-            <div class="person-2">🤸‍♂️</div>
-          </div>
+          <img src="/aboutupsport.png" alt="Up Sport" class="sport-img" />
           <div class="yellow-wave"></div>
         </div>
       </div>
@@ -146,7 +131,7 @@
       
       <div class="image-container">
         <div class="accessibility-image">
-          <div class="wheelchair-tennis">♿🎾</div>
+          <img src="/aboutupsolimouv.png" alt="Solimouv" class="accessibility-img" />
           <div class="yellow-wave"></div>
         </div>
       </div>
@@ -177,34 +162,6 @@
   .welcome-header {
     background: white;
     padding: 1rem 0;
-  }
-
-  .header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-  }
-
-  .logo-text {
-    font-family: 'League Gothic', sans-serif;
-    font-size: 32px;
-    font-weight: 400;
-    color: #1a1a1a;
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .user-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #f5f5f5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #e0e0e0;
   }
 
   .welcome-title {
@@ -249,10 +206,16 @@
 
   .handshake-illustration {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
-    width: 120px;
-    height: 80px;
+    top: 0;
+    right: 0;
+    width: 140px;
+    height: 100px;
+  }
+
+  .handshake-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 
   .up-team-description {
@@ -469,15 +432,13 @@
     justify-content: center;
   }
 
-  .people-exercising {
-    display: flex;
-    gap: 1rem;
-    font-size: 2.5rem;
-    z-index: 2;
-  }
-
-  .wheelchair-tennis {
-    font-size: 2.5rem;
+  .sport-img,
+  .accessibility-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+    position: relative;
     z-index: 2;
   }
 

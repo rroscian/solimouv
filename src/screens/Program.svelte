@@ -10,7 +10,7 @@
     },
     {
       id: 2,
-      name: "INITIATION BOX MIXTE",
+      name: "INITIATION BOXE MIXTE",
       day: "Samedi à 13h30",
       type: "Sport de contact",
       color: "gray"
@@ -92,6 +92,19 @@
       <div class="activities-grid">
         {#each activities as activity}
           <div class="activity-card {activity.color}">
+            <!-- Image ziguigui selon la couleur -->
+            <div class="ziguigui-container">
+              {#if activity.color === 'orange'}
+                <img src="/ziguigui_red.png" alt="Ziguigui" class="ziguigui-img" />
+              {:else if activity.color === 'gray'}
+                <img src="/ziguigui_grey.png" alt="Ziguigui" class="ziguigui-img" />
+              {:else if activity.color === 'yellow'}
+                <img src="/ziguigui_yellow.png" alt="Ziguigui" class="ziguigui-img" />
+              {:else if activity.color === 'teal'}
+                <img src="/ziguigui_blue.png" alt="Ziguigui" class="ziguigui-img" />
+              {/if}
+            </div>
+            
             <div class="card-tags">
               <div class="tag time-tag">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -228,72 +241,26 @@
   }
   
   /* Couleurs des cartes */
-  .activity-card.orange {
-    background: linear-gradient(135deg, #2C3E50 0%, #2C3E50 100%);
+  .activity-card {
+    background: #2C3E50;
     position: relative;
   }
-  
-  .activity-card.orange::after {
-    content: "";
+
+  /* Container pour les images ziguigui */
+  .ziguigui-container {
     position: absolute;
-    top: -20px;
-    right: -20px;
+    top: 0;
+    right: 0;
     width: 120px;
     height: 120px;
-    background: #FF5722;
-    border-radius: 50%;
-    opacity: 0.8;
+    overflow: hidden;
+    border-radius: 0 20px 0 0;
   }
-  
-  .activity-card.gray {
-    background: linear-gradient(135deg, #2C3E50 0%, #2C3E50 100%);
-    position: relative;
-  }
-  
-  .activity-card.gray::after {
-    content: "";
-    position: absolute;
-    top: -20px;
-    right: -20px;
-    width: 120px;
-    height: 120px;
-    background: #9E9E9E;
-    border-radius: 50%;
-    opacity: 0.8;
-  }
-  
-  .activity-card.yellow {
-    background: linear-gradient(135deg, #2C3E50 0%, #2C3E50 100%);
-    position: relative;
-  }
-  
-  .activity-card.yellow::after {
-    content: "";
-    position: absolute;
-    top: -20px;
-    right: -20px;
-    width: 120px;
-    height: 120px;
-    background: #FFEB3B;
-    border-radius: 50%;
-    opacity: 0.8;
-  }
-  
-  .activity-card.teal {
-    background: linear-gradient(135deg, #2C3E50 0%, #2C3E50 100%);
-    position: relative;
-  }
-  
-  .activity-card.teal::after {
-    content: "";
-    position: absolute;
-    top: -20px;
-    right: -20px;
-    width: 120px;
-    height: 120px;
-    background: #4FC3F7;
-    border-radius: 50%;
-    opacity: 0.8;
+
+  .ziguigui-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
   
   /* Tags des cartes */
@@ -336,7 +303,7 @@
     text-transform: uppercase;
     margin: 0;
     position: relative;
-    z-index: 2;
+    z-index: 3;
   }
   
   /* Responsive */

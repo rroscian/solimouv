@@ -6,6 +6,7 @@
   import Partners from './screens/Partners.svelte';
   import Contact from './screens/Contact.svelte';
   import TeamMatcher from './screens/TeamMatcher.svelte';
+  import Header from './components/Header.svelte';
   import Footer from './components/Footer.svelte';
 
   // Simple router
@@ -43,6 +44,8 @@
 </svelte:head>
 
 <div class="app">
+  <Header {navigate} {currentScreen} />
+  
   <main>
     {#if currentScreen === 'home'}
       <Home {navigate} />

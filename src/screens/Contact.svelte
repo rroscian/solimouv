@@ -2,6 +2,7 @@
   let formData = {
     name: '',
     email: '',
+    subject: '',
     message: ''
   };
   
@@ -17,8 +18,11 @@ Email: ${formData.email}
 Message:
 ${formData.message}`;
     
+    // Utiliser le sujet saisi ou un sujet par défaut avec le nom
+    const emailSubject = formData.subject || `Message depuis solimouv app de ${formData.name}`;
+    
     // Créer le mailto
-    const mailtoLink = `mailto:contact@solimouv.fr?subject=Message depuis Solimouv App&body=${encodeURIComponent(emailBody)}`;
+    const mailtoLink = `mailto:contact@solimouv.fr?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
     
     // Ouvrir le client email
     window.location.href = mailtoLink;
@@ -30,6 +34,7 @@ ${formData.message}`;
     formData = {
       name: '',
       email: '',
+      subject: '',
       message: ''
     };
   }
@@ -58,15 +63,7 @@ ${formData.message}`;
           <div class="question-header">
             <h2>UNE QUESTION ?<br>UNE REMARQUE ?</h2>
             <div class="hands-illustration">
-              <svg width="100" height="60" viewBox="0 0 100 60" fill="none">
-                <!-- Main droite orange -->
-                <path d="M20 30 C25 25, 35 25, 40 30 C45 35, 45 40, 40 45 C35 50, 25 50, 20 45 Z" fill="#FF5722"/>
-                <!-- Main gauche bleu -->
-                <path d="M60 30 C55 25, 45 25, 40 30 C35 35, 35 40, 40 45 C45 50, 55 50, 60 45 Z" fill="#2C3E50"/>
-                <!-- Points de connexion -->
-                <circle cx="38" cy="35" r="2" fill="#4FC3F7"/>
-                <circle cx="42" cy="35" r="2" fill="#4FC3F7"/>
-              </svg>
+              <img src="/handshake.png" alt="Handshake" class="handshake-img" />
             </div>
             <p>
               Envie d'en savoir plus ? N'hésitez pas à nous envoyer un message, nous 
@@ -94,6 +91,16 @@ ${formData.message}`;
                 bind:value={formData.email} 
                 required 
                 placeholder="votre@email.com"
+              />
+            </div>
+            
+            <div class="form-group">
+              <label for="subject">Sujet</label>
+              <input 
+                type="text" 
+                id="subject" 
+                bind:value={formData.subject} 
+                placeholder="Objet de votre message"
               />
             </div>
             
@@ -178,9 +185,17 @@ ${formData.message}`;
   }
   
   .hands-illustration {
-    margin: 1.5rem 0;
-    display: flex;
-    justify-content: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 140px;
+    height: 100px;
+  }
+
+  .handshake-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
   
   .question-header p {

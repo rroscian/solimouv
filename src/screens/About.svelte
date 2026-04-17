@@ -38,16 +38,9 @@
     <div class="container">
       <h2 class="section-title">NOS VALEURS</h2>
       
-      <!-- Illustration des mains qui se serrent -->
+      <!-- Illustration handshake en haut à droite -->
       <div class="hands-illustration">
-        <svg viewBox="0 0 200 120" class="hands-svg">
-          <!-- Main gauche (orange) -->
-          <path d="M20 80 Q30 70, 50 75 Q70 80, 90 85 Q100 90, 105 95" 
-                fill="#FF5722" stroke="#FF5722" stroke-width="2"/>
-          <!-- Main droite (bleue) -->
-          <path d="M180 80 Q170 70, 150 75 Q130 80, 110 85 Q100 90, 95 95" 
-                fill="#2C3E50" stroke="#2C3E50" stroke-width="2"/>
-        </svg>
+        <img src="/handshake.png" alt="Handshake" class="handshake-img" />
       </div>
       
       <div class="values-tags">
@@ -148,6 +141,10 @@
     margin-bottom: 2rem;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   }
+
+  .values-section {
+    position: relative;
+  }
   
   .practical-info {
     margin-bottom: 2rem;
@@ -232,13 +229,17 @@
   
   /* Values section */
   .hands-illustration {
-    text-align: center;
-    margin: 2rem 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    height: 80px;
   }
-  
-  .hands-svg {
-    width: 200px;
-    height: 120px;
+
+  .handshake-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
   
   .values-tags {

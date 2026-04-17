@@ -100,15 +100,8 @@
   }
   
   @media (max-width: 768px) {
-    .footer-content {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-    
-    .social-links {
-      flex-direction: row;
-      flex-wrap: wrap;
-      gap: 1rem;
+    .footer {
+      display: none;
     }
   }
 </style>
